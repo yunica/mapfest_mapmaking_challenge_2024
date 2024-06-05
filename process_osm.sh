@@ -33,5 +33,15 @@ for i in ${countries[*]};
                  --keep="highway=*" \
                  > ${outputDirOsm}/${i}_highway.osm
 
+
+  docker run --rm -v ${PWD}:/mnt/data developmentseed/geokit:node.latest node --max-old-space-size=14336 /usr/bin/osmtogeojson \
+      ${outputDirOsm}/${i}_boundary.osm >  ${outputDirOsm}/${i}_boundary.geojson
+
+  docker run --rm -v ${PWD}:/mnt/data developmentseed/geokit:node.latest node --max-old-space-size=14336 /usr/bin/osmtogeojson \
+      ${outputDirOsm}/${i}_poi.osm >  ${outputDirOsm}/${i}_poi.geojson
+
+  docker run --rm -v ${PWD}:/mnt/data developmentseed/geokit:node.latest node --max-old-space-size=14336 /usr/bin/osmtogeojson \
+    ${outputDirOsm}/${i}_highway.osm >  ${outputDirOsm}/${i}_highway.geojson
+
   echo "---- done osm process ${i} ------"
 done
