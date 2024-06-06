@@ -46,15 +46,15 @@ for i in ${countries[*]};
 
   [[ ! -f ${outputDirGeoJson}/${i}_boundary.geojson ]] && \
     docker run --rm -v ${PWD}:/mnt/data developmentseed/geokit:node.latest node --max-old-space-size=14336 /usr/bin/osmtogeojson \
-    ${outputDirGeoJson}/${i}_boundary.osm >  ${outputDirGeoJson}/${i}_boundary.geojson
+    ${outputDirOsm}/${i}_boundary.osm >  ${outputDirGeoJson}/${i}_boundary.geojson
 
   [[ ! -f ${outputDirGeoJson}/${i}_poi.geojson ]] && \
     docker run --rm -v ${PWD}:/mnt/data developmentseed/geokit:node.latest node --max-old-space-size=14336 /usr/bin/osmtogeojson \
-    ${outputDirGeoJson}/${i}_poi.osm >  ${outputDirGeoJson}/${i}_poi.geojson
+    ${outputDirOsm}/${i}_poi.osm >  ${outputDirGeoJson}/${i}_poi.geojson
 
   [[ ! -f ${outputDirGeoJson}/${i}_highway.geojson ]] && \
     docker run --rm -v ${PWD}:/mnt/data developmentseed/geokit:node.latest node --max-old-space-size=14336 /usr/bin/osmtogeojson \
-    ${outputDirGeoJson}/${i}_highway.osm >  ${outputDirGeoJson}/${i}_highway.geojson
+    ${outputDirOsm}/${i}_highway.osm >  ${outputDirGeoJson}/${i}_highway.geojson
 
   echo "---- done osm process ${i} ------"
 done
