@@ -45,7 +45,7 @@ for i in ${countries[*]};
 
  [[ ! -f ${outputDirOsm}/${i}_transport.osm ]] && \
     $GEOKIT_NODE osmfilter ${outputDirOsm}/${i}_filter.osm \
-         --keep"amenity=bus_station =ferry_terminal =fuel =parking =taxi =car_rental =bicycle_rental =bicycle_parking =car_wash =charging_station =ferry_terminal =bicycle_repair_station =public_transport" \
+         --keep="amenity=bus_station =ferry_terminal =fuel =parking =taxi =car_rental =bicycle_rental =bicycle_parking =car_wash =charging_station =ferry_terminal =bicycle_repair_station =public_transport" \
          > ${outputDirOsm}/${i}_transport.osm
   #  osm 2 geojson
 
