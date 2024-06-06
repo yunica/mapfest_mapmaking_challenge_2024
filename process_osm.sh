@@ -4,13 +4,13 @@ outputDir=data
 outputDirOsm=$outputDir/osm
 outputDirGeoJson=$outputDirOsm/geojson
 
-mkdir -p $outputDirOsm
+mkdir -p $outputDirGeoJson
 
 GEOKIT_NODE="docker run --rm -v ${PWD}:/mnt/data developmentseed/geokit:node.develop"
 GEOKIT_JAVA="docker run --rm -v ${PWD}:/mnt/data developmentseed/geokit:java.develop"
 GEOKIT_PYTHON="docker run --rm -v ${PWD}:/mnt/data developmentseed/geokit:java.develop"
 #
-countries=(nepal )
+countries=(india bangladesh pakistan nepal )
 for i in ${countries[*]};
  do
   # fecha osm data
@@ -28,7 +28,7 @@ for i in ${countries[*]};
          --keep="boundary=administrative or building=* or amenity=*	or highway=*" \
          > ${outputDirOsm}/${i}_filter.osm
 
-  [[ ! -f ${outputDirOsm}/${i}_filter.osm ]] && \
+  [[ ! -f ${outputDirOsm}/${i}_boundary.osm ]] && \
     $GEOKIT_NODE osmfilter ${outputDirOsm}/${i}_filter.osm \
          --keep="boundary=administrative" \
          > ${outputDirOsm}/${i}_boundary.osm
