@@ -30,7 +30,7 @@ for i in ${countries[*]};
 
   [[ ! -f ${outputDirOsm}/${i}_boundary.osm ]] && \
     $GEOKIT_NODE osmfilter ${outputDirOsm}/${i}_filter.osm \
-         --keep="boundary=administrative" \
+         --keep="boundary=administrative or admin_level=4 or admin_level=2 or admin_level=6" \
          > ${outputDirOsm}/${i}_boundary.osm
 
   [[ ! -f ${outputDirOsm}/${i}_poi.osm ]] && \
