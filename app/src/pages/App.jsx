@@ -6,12 +6,16 @@ import Button from "../components/buttom";
 const API_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
 function App() {
+  const mapRef = useRef();
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
-
+  const onClickCountry = (item) => {
+   console.log(item)
+  };
   return (
     <div className="relative bg-white dark:bg-slate-800 w-full h-screen">
       <div className={`h-screen w-screen`}>
         <Map
+          ref={mapRef}
           mapboxAccessToken={API_TOKEN}
           initialViewState={{
             latitude: 11.0942,
@@ -30,7 +34,7 @@ function App() {
         {isSidebarVisible && (
           <div className="absolute top-12 right-2 bottom-2 w-1/4 p-2 bg-gray-200 dark:bg-gray-700 rounded-lg	">
             <h1 className="text-xl text-white text-center font-bold mb-4">Countries</h1>
-            {COUNTRIES.map((i) =>  <Button key={i.name} ico={i.ico} name={i.name} /> )}
+            {COUNTRIES.map((i) =>  <Button key={i.name} ico={i.ico} name={i.name} onClick={() => onClickCountry(i)} /> )}
           </div>
         )}
       </div>
