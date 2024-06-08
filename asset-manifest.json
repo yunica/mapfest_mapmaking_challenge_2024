@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/mapfest_mapmaking_challenge_2024/static/css/main.0e3b6a81.css",
+    "main.js": "/mapfest_mapmaking_challenge_2024/static/js/main.fa3e58f0.js",
+    "static/js/453.d19fc75a.chunk.js": "/mapfest_mapmaking_challenge_2024/static/js/453.d19fc75a.chunk.js",
+    "static/js/879.32072918.chunk.js": "/mapfest_mapmaking_challenge_2024/static/js/879.32072918.chunk.js",
+    "index.html": "/mapfest_mapmaking_challenge_2024/index.html",
+    "main.0e3b6a81.css.map": "/mapfest_mapmaking_challenge_2024/static/css/main.0e3b6a81.css.map",
+    "main.fa3e58f0.js.map": "/mapfest_mapmaking_challenge_2024/static/js/main.fa3e58f0.js.map",
+    "453.d19fc75a.chunk.js.map": "/mapfest_mapmaking_challenge_2024/static/js/453.d19fc75a.chunk.js.map",
+    "879.32072918.chunk.js.map": "/mapfest_mapmaking_challenge_2024/static/js/879.32072918.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0e3b6a81.css",
+    "static/js/main.fa3e58f0.js"
+  ]
+}
