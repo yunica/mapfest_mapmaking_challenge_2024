@@ -9,6 +9,7 @@ export const COUNTRIES = [
   {
     ico: <SvgVietnam />,
     name: "Viet Nam",
+    name_code:'vietnam',
     iso_code: "VNM",
     center: {
       latitude: 14.0583,
@@ -18,6 +19,7 @@ export const COUNTRIES = [
   {
     ico: <Svglao />,
     name: "Lao",
+    name_code:'laos',
     iso_code: "LM",
     center: {
       latitude: 19.8563,
@@ -27,6 +29,7 @@ export const COUNTRIES = [
   {
     ico: <SvgMyanmar />,
     name: "Myanmar",
+    name_code:'myanmar',
     iso_code: "MMR",
     center: {
       latitude: 21.9162,
@@ -36,6 +39,7 @@ export const COUNTRIES = [
   {
     ico: <SvgNepal />,
     name: "Nepal",
+    name_code:'nepal',
     iso_code: "NPL",
     center: {
       latitude: 28.3949,
@@ -45,6 +49,7 @@ export const COUNTRIES = [
   {
     ico: <SvgAfghanistan />,
     name: "Afghanistan",
+    name_code:'afghanistan',
     iso_code: "AFG",
     center: {
       latitude: 33.9391,
@@ -54,6 +59,7 @@ export const COUNTRIES = [
   {
     ico: <SvgPakistan />,
     name: "Pakistan",
+    name_code:'pakistan',
     iso_code: "PAK",
     center: {
       latitude: 30.3753,
@@ -61,3 +67,5 @@ export const COUNTRIES = [
     },
   },
 ];
+
+export const MIN_ZOOM_LAYOUT=4;

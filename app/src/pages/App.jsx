@@ -5,15 +5,17 @@ import StaticMap, {
   NavigationControl,
   ScaleControl,
 } from "react-map-gl";
-import { COUNTRIES } from "../components/constants";
-import Button from "../components/buttom";
+import { COUNTRIES, MIN_ZOOM_LAYOUT } from "../components/constants";
 import CustomSelect from "../components/select";
 import DeckGL from "deck.gl";
 import { MapContext } from "react-map-gl/dist/esm/components/map.js";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import axios from "axios";
+import pako from "pako";
+import { csv2object, object2feature } from "../utils/utils";
 
 const API_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
-
+const LAYERS_ACTION = ["school-layer", "antenas-layer"];
 const initialViewState = {
   latitude: 14.0583,
   longitude: 108.2772,
@@ -25,6 +27,8 @@ function App() {
   const deckRef = useRef(null);
   const [deckLayers, setDeckLayers] = useState([]);
   const [viewState, setViewState] = useState({ ...initialViewState });
+  // layout
+  const [sourceSchool, setSourceSchool] = useState(null);
 
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
   const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]);
@@ -36,6 +40,31 @@ function App() {
 
   const handleMapClick = (event) => {};
   const handleMapHover = (event) => {};
+
+  // fetch data
+  useEffect(() => {
+    const fetchData = async ({ name_code }) => {
+      try {
+        const responseSchool = await axios.get(
+          `https://raw.githubusercontent.com/yunica/mapfest_mapmaking_challenge_2024/main/data_process/csv_file/${name_code}_education.csv.gz`,
+          {
+            responseType: "arraybuffer",
+          }
+        );
+        const responseSchoolString = pako.inflate(responseSchool.data, {
+          to: "string",
+        });
+        let schoolObject = object2feature(csv2object(responseSchoolString));
+        setSourceSchool(schoolObject);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    const { name, name_code, iso_code } = selectedCountry;
+
+    fetchData({ name, name_code, iso_code });
+  }, [selectedCountry]);
 
   return (
     <div className="relative w-full h-screen bg-white dark:bg-slate-800">
@@ -53,18 +82,43 @@ function App() {
             ref={mapRef}
             scrollZoom={true}
             boxZoom={true}
+            minZoom={6}
+          maxZoom={15}
             doubleClickZoom={true}
             mapStyle="mapbox://styles/junica123/clx4w5d0p08dn01nx9vmbhyio"
             mapboxAccessToken={API_TOKEN}
           >
+            {sourceSchool ? (
+              <Source id="school-points" type="geojson" data={sourceSchool}>
+                <Layer
+                  id="school-layer"
+                  type="circle"
+                  layout={{
+                    "icon-size": [
+                      "interpolate",
+                      ["linear"],
+                      ["zoom"],
+                      5,
+                      0.05,
+                      16,
+                      0.2,
+                    ],
+                  }}
+                  maxzoom={18}
+                  minzoom={MIN_ZOOM_LAYOUT}
+                />
+              </Source>
+            ) : null}
+
+
             <ScaleControl position="top-left" />
             <NavigationControl position="top-left" />
           </StaticMap>
         </DeckGL>
-        {isSidebarVisible ? (
+        {!isSidebarVisible ? (
           <button
             className="absolute p-2 text-sm text-white bg-gray-200 rounded top-4 right-2 dark:bg-gray-700"
-            onClick={() => setIsSidebarVisible(false)}
+            onClick={() => setIsSidebarVisible(true)}
           >
             <div className="flex items-center justify-start ">
               <FiEye />
@@ -78,7 +132,7 @@ function App() {
               <label className="text-right">
                 <button
                   className="absolute px-2 text-sm text-white bg-gray-200 rounded top-4 right-2 dark:bg-gray-700 "
-                  onClick={() => setIsSidebarVisible(true)}
+                  onClick={() => setIsSidebarVisible(false)}
                   data-tooltip-target="tooltip-hidde"
                   type="button"
                 >
