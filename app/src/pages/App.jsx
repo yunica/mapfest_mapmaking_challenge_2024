@@ -7,6 +7,7 @@ import StaticMap, {
 } from "react-map-gl";
 import { COUNTRIES } from "../components/constants";
 import Button from "../components/buttom";
+import CustomSelect from "../components/select";
 import DeckGL from "deck.gl";
 import { MapContext } from "react-map-gl/dist/esm/components/map.js";
 
@@ -15,7 +16,7 @@ const API_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 const initialViewState = {
   latitude: 14.0583,
   longitude: 108.2772,
-  zoom: 7,
+  zoom: 8,
 };
 
 function App() {
@@ -25,18 +26,20 @@ function App() {
   const [viewState, setViewState] = useState({ ...initialViewState });
 
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
-  const onClickCountry = (item) => {
-    setViewState({...initialViewState,...item.center})
-  };
-  const handleMapClick = (event) => {
-  };
-  const handleMapHover = (event) => {
-  
+  const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]);
+
+  const handleChange = (selectCountry) => {
+    setViewState({...initialViewState,...selectCountry.center})
+    setSelectedCountry(selectCountry);
   };
 
+
+  const handleMapClick = (event) => {};
+  const handleMapHover = (event) => {};
+
   return (
-    <div className="relative bg-white dark:bg-slate-800 w-full h-screen">
-      <div className="h-screen w-screen">
+    <div className="relative w-full h-screen bg-white dark:bg-slate-800">
+      <div className="w-screen h-screen">
         <DeckGL
           ref={deckRef}
           layers={deckLayers}
@@ -60,25 +63,23 @@ function App() {
         </DeckGL>
 
         <button
-          className="absolute top-3 right-4 px-2 bg-gray-200 dark:bg-gray-700 text-white rounded text-sm"
+          className="absolute px-2 text-sm text-white bg-gray-200 rounded top-3 right-4 dark:bg-gray-700"
           onClick={() => setIsSidebarVisible(!isSidebarVisible)}
         >
           {isSidebarVisible ? "Hice options" : "Show options"}
         </button>
 
         {isSidebarVisible && (
-          <div className="absolute top-12 right-2 bottom-2 w-1/4 p-2 bg-gray-200 dark:bg-gray-700 rounded-lg	">
-            <h1 className="text-xl text-white text-center font-bold mb-4">
+          <div className="absolute w-1/4 p-2 bg-gray-200 rounded-lg top-12 right-2 bottom-8 dark:bg-gray-700 ">
+            <h1 className="mb-4 text-xl text-center text-white font-">
               Countries
             </h1>
-            {COUNTRIES.map((i) => (
-              <Button
-                key={i.name}
-                ico={i.ico}
-                name={i.name}
-                onClick={() => onClickCountry(i)}
-              />
-            ))}
+            <CustomSelect
+              options={COUNTRIES}
+              onChange={handleChange}
+              selectedValue={selectedCountry}
+            />
+
           </div>
         )}
       </div>
