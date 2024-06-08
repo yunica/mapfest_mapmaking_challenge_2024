@@ -15,7 +15,7 @@
   },
   "scripts": {
     "start": "PUBLIC_URL=/mapfest_mapmaking_challenge_2024  react-scripts start",
-    "predeploy": "PUBLIC_URL=/peru-mobile-signal-schools  react-scripts build",
+    "predeploy": "PUBLIC_URL=/mapfest_mapmaking_challenge_2024  react-scripts build",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {

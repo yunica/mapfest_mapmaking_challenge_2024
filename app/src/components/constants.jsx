@@ -69,6 +69,13 @@ export const COUNTRIES = [
 ];
 
 export const MIN_ZOOM_LAYOUT = 4;
+export const MIN_ZOOM_LAYOUT_DATA = 8;
+export const MAX_ZOOM_LAYOUT_DATA = 16;
+export const MIN_ZOOM_HEADMAP=4;
+export const MAX_ZOOM_HEADMAP=MIN_ZOOM_LAYOUT_DATA+0.1;
+
+
+
 export const AMENITIES = {
   hospital: "hospital.svg",
   clinic: "clinic.svg",
@@ -84,19 +91,13 @@ export const AMENITIES = {
   taxi: "taxi.svg",
   charging_station: "charging_station.svg",
   car_rental: "car_rental.svg",
-  school: "school.png",
-  university: "university.png",
+  school: "school.svg",
+  university: "university.svg",
   library: "library.svg",
-  kindergarten: "kindergarten.png",
-  college: "college.png",
+  kindergarten: "kindergarten.svg",
+  college: "college.svg",
   public_bookcase: "public_bookcase.svg",
   parking_entrance: "parking_entrance.svg",
   bicycle_rental: "bicycle_rental.svg",
-  language_school: "language_school.png",
-};
-
-// map style
-export const layoutStyleGeneral = {
-  "icon-image": ["concat", ["get", "amenity"], "-icon", ],
-  "icon-size": ["interpolate", ["linear"], ["zoom"], 6, 0.15, 16, 0.4],
+  language_school: "language_school.svg",
 };
