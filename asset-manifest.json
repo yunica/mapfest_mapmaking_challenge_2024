@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/peru-mobile-signal-schools/static/css/main.94294986.css",
-    "main.js": "/peru-mobile-signal-schools/static/js/main.37c00351.js",
-    "static/js/453.d19fc75a.chunk.js": "/peru-mobile-signal-schools/static/js/453.d19fc75a.chunk.js",
-    "static/js/879.822c6055.chunk.js": "/peru-mobile-signal-schools/static/js/879.822c6055.chunk.js",
-    "index.html": "/peru-mobile-signal-schools/index.html",
-    "main.94294986.css.map": "/peru-mobile-signal-schools/static/css/main.94294986.css.map",
-    "main.37c00351.js.map": "/peru-mobile-signal-schools/static/js/main.37c00351.js.map",
-    "453.d19fc75a.chunk.js.map": "/peru-mobile-signal-schools/static/js/453.d19fc75a.chunk.js.map",
-    "879.822c6055.chunk.js.map": "/peru-mobile-signal-schools/static/js/879.822c6055.chunk.js.map"
+    "main.css": "/mapfest_mapmaking_challenge_2024/static/css/main.94294986.css",
+    "main.js": "/mapfest_mapmaking_challenge_2024/static/js/main.b0331ccc.js",
+    "static/js/453.d19fc75a.chunk.js": "/mapfest_mapmaking_challenge_2024/static/js/453.d19fc75a.chunk.js",
+    "static/js/879.32072918.chunk.js": "/mapfest_mapmaking_challenge_2024/static/js/879.32072918.chunk.js",
+    "index.html": "/mapfest_mapmaking_challenge_2024/index.html",
+    "main.94294986.css.map": "/mapfest_mapmaking_challenge_2024/static/css/main.94294986.css.map",
+    "main.b0331ccc.js.map": "/mapfest_mapmaking_challenge_2024/static/js/main.b0331ccc.js.map",
+    "453.d19fc75a.chunk.js.map": "/mapfest_mapmaking_challenge_2024/static/js/453.d19fc75a.chunk.js.map",
+    "879.32072918.chunk.js.map": "/mapfest_mapmaking_challenge_2024/static/js/879.32072918.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.94294986.css",
-    "static/js/main.37c00351.js"
+    "static/js/main.b0331ccc.js"
   ]
 }
