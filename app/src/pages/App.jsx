@@ -10,6 +10,7 @@ import Button from "../components/buttom";
 import CustomSelect from "../components/select";
 import DeckGL from "deck.gl";
 import { MapContext } from "react-map-gl/dist/esm/components/map.js";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const API_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -29,10 +30,9 @@ function App() {
   const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]);
 
   const handleChange = (selectCountry) => {
-    setViewState({...initialViewState,...selectCountry.center})
+    setViewState({ ...initialViewState, ...selectCountry.center });
     setSelectedCountry(selectCountry);
   };
-
 
   const handleMapClick = (event) => {};
   const handleMapHover = (event) => {};
@@ -61,25 +61,36 @@ function App() {
             <NavigationControl position="top-left" />
           </StaticMap>
         </DeckGL>
-
-        <button
-          className="absolute px-2 text-sm text-white bg-gray-200 rounded top-3 right-4 dark:bg-gray-700"
-          onClick={() => setIsSidebarVisible(!isSidebarVisible)}
-        >
-          {isSidebarVisible ? "Hice options" : "Show options"}
-        </button>
-
-        {isSidebarVisible && (
-          <div className="absolute w-1/4 p-2 bg-gray-200 rounded-lg top-12 right-2 bottom-8 dark:bg-gray-700 ">
+        {isSidebarVisible ? (
+          <button
+            className="absolute p-2 text-sm text-white bg-gray-200 rounded top-4 right-2 dark:bg-gray-700"
+            onClick={() => setIsSidebarVisible(false)}
+          >
+            <div className="flex items-center justify-start ">
+              <FiEye />
+              <label className="ml-2">Show panel</label>
+            </div>
+          </button>
+        ) : (
+          <div className="absolute w-1/4 p-2 bg-gray-200 rounded-lg top-4 right-2 bottom-8 dark:bg-gray-700 ">
             <h1 className="mb-4 text-xl text-center text-white font-">
               Countries
+              <label className="text-right">
+                <button
+                  className="absolute px-2 text-sm text-white bg-gray-200 rounded top-4 right-2 dark:bg-gray-700 "
+                  onClick={() => setIsSidebarVisible(true)}
+                  data-tooltip-target="tooltip-hidde"
+                  type="button"
+                >
+                  <FiEyeOff />
+                </button>
+              </label>
             </h1>
             <CustomSelect
               options={COUNTRIES}
               onChange={handleChange}
               selectedValue={selectedCountry}
             />
-
           </div>
         )}
       </div>
