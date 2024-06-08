@@ -5,7 +5,12 @@ import StaticMap, {
   NavigationControl,
   ScaleControl,
 } from "react-map-gl";
-import { COUNTRIES, MIN_ZOOM_LAYOUT } from "../components/constants";
+import {
+  COUNTRIES,
+  MIN_ZOOM_LAYOUT,
+  AMENITIES,
+  layoutStyleGeneral,
+} from "../components/constants";
 import CustomSelect from "../components/select";
 import DeckGL from "deck.gl";
 import { MapContext } from "react-map-gl/dist/esm/components/map.js";
@@ -14,6 +19,7 @@ import axios from "axios";
 import pako from "pako";
 import { csv2object, object2feature } from "../utils/utils";
 
+const basename = (process.env.PUBLIC_URL || "").replace("//", "/");
 const API_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 const LAYERS_ACTION = ["school-layer", "antenas-layer"];
 const initialViewState = {
@@ -40,13 +46,38 @@ function App() {
 
   const handleMapClick = (event) => {};
   const handleMapHover = (event) => {};
-
+  const handleLoad = () => {
+    const map = mapRef.current.getMap();
+    // load images
+    const icons = Object.keys(AMENITIES);
+    icons
+      .filter((j) => j)
+      .forEach((i) => {
+        fetch(`${basename}/assets/marker/${AMENITIES[i]}`)
+          .then((response) => response.blob())
+          .then((blob) => {
+            try {
+              const reader = new FileReader();
+              reader.onload = () => {
+                const image = new Image(64, 64);
+                image.src = reader.result;
+                image.onload = () => {
+                  map.addImage(`${i}-icon`, image);
+                };
+              };
+              reader.readAsDataURL(blob);
+            } catch (error) {
+              console.error(error);
+            }
+          });
+      });
+  };
   // fetch data
   useEffect(() => {
     const fetchData = async ({ name_code }) => {
       try {
         const responseSchool = await axios.get(
-          `https://raw.githubusercontent.com/yunica/mapfest_mapmaking_challenge_2024/main/data_process/csv_file/${name_code}_education.csv.gz`,
+          `${basename}/assets/csv_file/${name_code}_education.csv.gz`,
           {
             responseType: "arraybuffer",
           }
@@ -81,9 +112,10 @@ function App() {
           <StaticMap
             ref={mapRef}
             scrollZoom={true}
+            onLoad={handleLoad}
             boxZoom={true}
             minZoom={6}
-          maxZoom={15}
+            maxZoom={15}
             doubleClickZoom={true}
             mapStyle="mapbox://styles/junica123/clx4w5d0p08dn01nx9vmbhyio"
             mapboxAccessToken={API_TOKEN}
@@ -92,24 +124,13 @@ function App() {
               <Source id="school-points" type="geojson" data={sourceSchool}>
                 <Layer
                   id="school-layer"
-                  type="circle"
-                  layout={{
-                    "icon-size": [
-                      "interpolate",
-                      ["linear"],
-                      ["zoom"],
-                      5,
-                      0.05,
-                      16,
-                      0.2,
-                    ],
-                  }}
-                  maxzoom={18}
+                  type="symbol"
+                  layout={layoutStyleGeneral}
+                  maxzoom={16}
                   minzoom={MIN_ZOOM_LAYOUT}
                 />
               </Source>
             ) : null}
-
 
             <ScaleControl position="top-left" />
             <NavigationControl position="top-left" />

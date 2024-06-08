@@ -25,13 +25,8 @@ for i in ${countries[*]};
 
   [[ ! -f ${outputDirOsm}/${i}_filter.osm ]] && \
     $GEOKIT_NODE osmfilter ${outputDirOsm}/${i}.osm \
-         --keep="boundary=administrative or admin_level=* or amenity=*" \
+         --keep="amenity=*" \
          > ${outputDirOsm}/${i}_filter.osm
-
-  [[ ! -f ${outputDirOsm}/${i}_boundary.osm ]] && \
-    $GEOKIT_NODE osmfilter ${outputDirOsm}/${i}_filter.osm \
-         --keep="boundary=administrative and (admin_level=2 or admin_level=4 or admin_level=6)" \
-         > ${outputDirOsm}/${i}_boundary.osm
 
   [[ ! -f ${outputDirOsm}/${i}_poi_education.osm ]] && \
     $GEOKIT_NODE osmfilter ${outputDirOsm}/${i}_filter.osm \
@@ -40,17 +35,14 @@ for i in ${countries[*]};
 
   [[ ! -f ${outputDirOsm}/${i}_healthcare.osm ]] && \
     $GEOKIT_NODE osmfilter ${outputDirOsm}/${i}_filter.osm \
-         --keep="amenity=hospital =clinic =doctors =dentist =pharmacy =nursing_home =social_facility" \
+         --keep="amenity=hospital =clinic =doctors =dentist =pharmacy =nursing_home" \
          > ${outputDirOsm}/${i}_healthcare.osm
 
  [[ ! -f ${outputDirOsm}/${i}_transport.osm ]] && \
     $GEOKIT_NODE osmfilter ${outputDirOsm}/${i}_filter.osm \
-         --keep="amenity=bus_station =ferry_terminal =fuel =parking =taxi =car_rental =bicycle_rental =bicycle_parking =car_wash =charging_station =ferry_terminal =bicycle_repair_station =public_transport" \
+         --keep="amenity=bus_station =ferry_terminal =fuel =parking =taxi =car_rental =bicycle_rental =bicycle_parking  =charging_station =ferry_terminal  =public_transport" \
          > ${outputDirOsm}/${i}_transport.osm
   #  osm 2 geojson
-
-  docker run --rm -v ${PWD}:/mnt/data developmentseed/geokit:node.latest node --max-old-space-size=14336 /usr/bin/osmtogeojson \
-    ${outputDirOsm}/${i}_boundary.osm >  ${outputDirGeoJson}/${i}_boundary.geojson
 
   docker run --rm -v ${PWD}:/mnt/data developmentseed/geokit:node.latest node --max-old-space-size=14336 /usr/bin/osmtogeojson \
     ${outputDirOsm}/${i}_poi_education.osm >  ${outputDirGeoJson}/${i}_poi_education.geojson

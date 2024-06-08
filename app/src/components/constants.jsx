@@ -9,7 +9,7 @@ export const COUNTRIES = [
   {
     ico: <SvgVietnam />,
     name: "Viet Nam",
-    name_code:'vietnam',
+    name_code: "vietnam",
     iso_code: "VNM",
     center: {
       latitude: 14.0583,
@@ -19,7 +19,7 @@ export const COUNTRIES = [
   {
     ico: <Svglao />,
     name: "Lao",
-    name_code:'laos',
+    name_code: "laos",
     iso_code: "LM",
     center: {
       latitude: 19.8563,
@@ -29,7 +29,7 @@ export const COUNTRIES = [
   {
     ico: <SvgMyanmar />,
     name: "Myanmar",
-    name_code:'myanmar',
+    name_code: "myanmar",
     iso_code: "MMR",
     center: {
       latitude: 21.9162,
@@ -39,7 +39,7 @@ export const COUNTRIES = [
   {
     ico: <SvgNepal />,
     name: "Nepal",
-    name_code:'nepal',
+    name_code: "nepal",
     iso_code: "NPL",
     center: {
       latitude: 28.3949,
@@ -49,7 +49,7 @@ export const COUNTRIES = [
   {
     ico: <SvgAfghanistan />,
     name: "Afghanistan",
-    name_code:'afghanistan',
+    name_code: "afghanistan",
     iso_code: "AFG",
     center: {
       latitude: 33.9391,
@@ -59,7 +59,7 @@ export const COUNTRIES = [
   {
     ico: <SvgPakistan />,
     name: "Pakistan",
-    name_code:'pakistan',
+    name_code: "pakistan",
     iso_code: "PAK",
     center: {
       latitude: 30.3753,
@@ -68,4 +68,35 @@ export const COUNTRIES = [
   },
 ];
 
-export const MIN_ZOOM_LAYOUT=4;
+export const MIN_ZOOM_LAYOUT = 4;
+export const AMENITIES = {
+  hospital: "hospital.svg",
+  clinic: "clinic.svg",
+  dentist: "dentist.svg",
+  pharmacy: "pharmacy.svg",
+  doctors: "doctors.svg",
+  nursing_home: "nursing_home.svg",
+  parking: "parking.svg",
+  fuel: "fuel.svg",
+  bus_station: "bus_station.svg",
+  bicycle_parking: "bicycle_parking.svg",
+  ferry_terminal: "ferry_terminal.svg",
+  taxi: "taxi.svg",
+  charging_station: "charging_station.svg",
+  car_rental: "car_rental.svg",
+  school: "school.png",
+  university: "university.png",
+  library: "library.svg",
+  kindergarten: "kindergarten.png",
+  college: "college.png",
+  public_bookcase: "public_bookcase.svg",
+  parking_entrance: "parking_entrance.svg",
+  bicycle_rental: "bicycle_rental.svg",
+  language_school: "language_school.png",
+};
+
+// map style
+export const layoutStyleGeneral = {
+  "icon-image": ["concat", ["get", "amenity"], "-icon", ],
+  "icon-size": ["interpolate", ["linear"], ["zoom"], 6, 0.15, 16, 0.4],
+};
