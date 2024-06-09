@@ -15,7 +15,6 @@ import {
 import { layoutStyleGeneral } from "../utils/mapStyle";
 import DeckGL from "deck.gl";
 import { MapContext } from "react-map-gl/dist/esm/components/map.js";
-import { FiEye } from "react-icons/fi";
 import { fetchLocalCsv } from "../utils/utils";
 import Sidebar from "../components/Sidebar";
 
@@ -34,7 +33,7 @@ function App() {
   const [deckLayers, setDeckLayers] = useState([]);
   const [viewState, setViewState] = useState({ ...initialViewState });
   const [sourcesData, setSourcesData] = useState(null);
-  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+  const [sourcesDataFlag, setSourcesDataFlag] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]);
 
   // fetch data
@@ -50,13 +49,19 @@ function App() {
           healthcareData,
           transportData,
         });
+        setSourcesDataFlag({
+          education_layer: false,
+          healthcare_layer: false,
+          transport_layer: false,
+        });
       } catch (err) {
         setSourcesData(null);
+        setSourcesDataFlag(null);
       }
     };
 
     const { name_code } = selectedCountry;
-    fetchData({  name_code });
+    fetchData({ name_code });
   }, [selectedCountry]);
 
   const handleChange = (selectCountry) => {
@@ -64,6 +69,12 @@ function App() {
     setSelectedCountry(selectCountry);
   };
 
+  const handlesetSourcesDataFlag = (layer_id) => (event) => {
+    setSourcesDataFlag({
+      ...sourcesDataFlag,
+      [layer_id]: event.target.checked,
+    });
+  };
   const handleMapClick = (event) => {};
   const handleMapHover = (event) => {};
   const handleLoad = () => {
@@ -116,7 +127,7 @@ function App() {
             mapStyle="mapbox://styles/junica123/clx4w5d0p08dn01nx9vmbhyio"
             mapboxAccessToken={API_TOKEN}
           >
-            {sourcesData && sourcesData.educationData ? (
+            {sourcesDataFlag && sourcesData && sourcesData.educationData ? (
               <Source
                 id="education-osm"
                 type="geojson"
@@ -125,13 +136,16 @@ function App() {
                 <Layer
                   id="education-points"
                   type="symbol"
+                  filter={
+                    sourcesDataFlag.education_layer ? null : ["==", "id", -1]
+                  }
                   layout={layoutStyleGeneral}
                   maxzoom={MAX_ZOOM_LAYOUT_DATA}
                   minzoom={MIN_ZOOM_LAYOUT_DATA}
                 />
               </Source>
             ) : null}
-            {sourcesData && sourcesData.healthcareData ? (
+            {sourcesDataFlag && sourcesData && sourcesData.healthcareData ? (
               <Source
                 id="healthcare-osm"
                 type="geojson"
@@ -140,13 +154,16 @@ function App() {
                 <Layer
                   id="healthcare-points"
                   type="symbol"
+                  filter={
+                    sourcesDataFlag.healthcare_layer ? null : ["==", "id", -1]
+                  }
                   layout={layoutStyleGeneral}
                   maxzoom={MAX_ZOOM_LAYOUT_DATA}
                   minzoom={MIN_ZOOM_LAYOUT_DATA}
                 />
               </Source>
             ) : null}
-            {sourcesData && sourcesData.transportData ? (
+            {sourcesDataFlag && sourcesData && sourcesData.transportData ? (
               <Source
                 id="trasport-osm"
                 type="geojson"
@@ -155,6 +172,9 @@ function App() {
                 <Layer
                   id="trasport-points"
                   type="symbol"
+                  filter={
+                    sourcesDataFlag.transport_layer ? null : ["==", "id", -1]
+                  }
                   layout={layoutStyleGeneral}
                   maxzoom={MAX_ZOOM_LAYOUT_DATA}
                   minzoom={MIN_ZOOM_LAYOUT_DATA}
@@ -166,23 +186,13 @@ function App() {
             <NavigationControl position="top-left" />
           </StaticMap>
         </DeckGL>
-        {!isSidebarVisible ? (
-          <button
-            className="absolute p-2 text-sm text-white bg-gray-200 rounded top-4 right-2 dark:bg-gray-700"
-            onClick={() => setIsSidebarVisible(true)}
-          >
-            <div className="flex items-center justify-start ">
-              <FiEye />
-              <label className="ml-2">Show panel</label>
-            </div>
-          </button>
-        ) : (
-          <Sidebar
-            setIsSidebarVisible={setIsSidebarVisible}
-            handleChange={handleChange}
-            selectedCountry={selectedCountry}
-          />
-        )}
+
+        <Sidebar
+          handleChangeSelect={handleChange}
+          selectedCountry={selectedCountry}
+          layersCheckbox={sourcesDataFlag}
+          setCheckboxLayer={handlesetSourcesDataFlag}
+        />
       </div>
     </div>
   );
