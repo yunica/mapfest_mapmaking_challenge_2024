@@ -1,24 +1,20 @@
-import React, { useRef, useEffect, useState } from "react";
-import StaticMap, { NavigationControl, ScaleControl } from "react-map-gl";
-import { COUNTRIES, AMENITIES } from "../components/constants";
-import DeckGL from "deck.gl";
-import { MapContext } from "react-map-gl/dist/esm/components/map.js";
-import { fetchLocalCsv } from "../utils/utils";
-import Sidebar from "../components/Sidebar";
-import CustomPopUp from "../components/popUp";
-import DataLayerWrap from "../components/dataLayer";
+import React, { useRef, useEffect, useState } from 'react';
+import StaticMap, { NavigationControl, ScaleControl } from 'react-map-gl';
+import { COUNTRIES, AMENITIES } from '../components/constants';
+import DeckGL from 'deck.gl';
+import { MapContext } from 'react-map-gl/dist/esm/components/map.js';
+import { fetchLocalCsv } from '../utils/utils';
+import Sidebar from '../components/Sidebar';
+import CustomPopUp from '../components/popUp';
+import DataLayerWrap from '../components/dataLayer';
 
-const basename = (process.env.PUBLIC_URL || "").replace("//", "/");
+const basename = (process.env.PUBLIC_URL || '').replace('//', '/');
 const API_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
-const LAYERS_ACTION = [
-  "education-points",
-  "healthcare-points",
-  "trasport-points",
-];
+const LAYERS_ACTION = ['education-points', 'healthcare-points', 'trasport-points'];
 const initialViewState = {
   latitude: 14.0583,
   longitude: 108.2772,
-  zoom: 8,
+  zoom: 8
 };
 
 function App() {
@@ -35,20 +31,20 @@ function App() {
   useEffect(() => {
     const fetchData = async ({ name_code }) => {
       try {
-        const educationData = await fetchLocalCsv(name_code, "education");
-        const healthcareData = await fetchLocalCsv(name_code, "healthcare");
-        const transportData = await fetchLocalCsv(name_code, "transport");
+        const educationData = await fetchLocalCsv(name_code, 'education');
+        const healthcareData = await fetchLocalCsv(name_code, 'healthcare');
+        const transportData = await fetchLocalCsv(name_code, 'transport');
 
         setSourcesData({
           educationData,
           healthcareData,
-          transportData,
+          transportData
         });
         setSourcesDataFlag({
           education_layer: false,
           healthcare_layer: false,
           transport_layer: false,
-          population_layer: true,
+          population_layer: true
         });
       } catch (err) {
         setSourcesData(null);
@@ -68,16 +64,14 @@ function App() {
   const handlesetSourcesDataFlag = (layer_id) => (event) => {
     setSourcesDataFlag({
       ...sourcesDataFlag,
-      [layer_id]: event.target.checked,
+      [layer_id]: event.target.checked
     });
   };
   const handleMapClick = (event) => {};
   const handleMapHover = (event) => {
     try {
       const features = mapRef.current.queryRenderedFeatures([event.x, event.y]);
-      const new_features = features.filter(
-        (i) => i.layer && LAYERS_ACTION.includes(i.layer.id)
-      );
+      const new_features = features.filter((i) => i.layer && LAYERS_ACTION.includes(i.layer.id));
 
       if (new_features.length) {
         const i = { ...new_features[0], lngLat: event.coordinate };

@@ -1,6 +1,6 @@
-import { Popup } from "react-map-gl";
-import { AMENITIES } from "./constants";
-const basename = (process.env.PUBLIC_URL || "").replace("//", "/");
+import { Popup } from 'react-map-gl';
+import { AMENITIES } from './constants';
+const basename = (process.env.PUBLIC_URL || '').replace('//', '/');
 
 const popUp = ({ hoverInfo }) => {
   if (!hoverInfo) return null;
@@ -40,7 +40,7 @@ const popUp = ({ hoverInfo }) => {
         </p>
         <p className="">
           <span className="mr-1 font-normal">Layer:</span>
-          <span className="font-bold">{layer.id.split("-")[0]}</span>
+          <span className="font-bold">{layer.id.split('-')[0]}</span>
         </p>
       </div>
     </Popup>

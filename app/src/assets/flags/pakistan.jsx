@@ -10,13 +10,7 @@ const IconoSVG = () => (
     <rect x="-75" y="-40" width="120" height="80" fill="#fff" />
     <rect x="-45" y="-40" width="90" height="80" fill="#01411C" />
     <circle r="24" fill="#fff" />
-    <circle
-      r="22"
-      cx="-7"
-      cy="-40"
-      fill="#01411C"
-      transform="rotate(-41.63354, 45, -40)"
-    />
+    <circle r="22" cx="-7" cy="-40" fill="#01411C" transform="rotate(-41.63354, 45, -40)" />
     <polygon
       points="0,-513674 301930,415571 -488533,-158734 488533,-158734 -301930,415571"
       fill="#fff"
@@ -25,4 +19,4 @@ const IconoSVG = () => (
   </svg>
 );
 
-export default IconoSVG
+export default IconoSVG;

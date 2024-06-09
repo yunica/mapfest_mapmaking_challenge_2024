@@ -1,16 +1,11 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { FiEyeOff, FiEye } from "react-icons/fi";
-import CustomSelect from "./select";
-import { COUNTRIES } from "./constants";
-import CheckBox from "./checkBox";
+import { FiEyeOff, FiEye } from 'react-icons/fi';
+import CustomSelect from './select';
+import { COUNTRIES } from './constants';
+import CheckBox from './checkBox';
 
-const Sidebar = ({
-  handleChangeSelect,
-  selectedCountry,
-  layersCheckbox,
-  setCheckboxLayer,
-}) => {
+const Sidebar = ({ handleChangeSelect, selectedCountry, layersCheckbox, setCheckboxLayer }) => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
 
   if (!isSidebarVisible) {
@@ -30,9 +25,7 @@ const Sidebar = ({
   return (
     <div className="absolute p-2 text-white bg-gray-200 rounded-lg lg:w-1/5 top-4 right-2 bottom-8 dark:bg-gray-700 md:w-1/4 sm:w-1/2 xs:w-1/2 ">
       <div className="flex justify-between mb-4">
-        <h3 className="text-center text-md">
-          Population Density and Public Services Map
-        </h3>
+        <h3 className="text-center text-md">Population Density and Public Services Map</h3>
         <button
           className="flex items-center px-2 text-sm text-white bg-gray-200 rounded dark:bg-gray-700"
           onClick={() => setIsSidebarVisible(false)}
