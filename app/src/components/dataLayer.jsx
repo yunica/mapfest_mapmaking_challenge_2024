@@ -1,6 +1,6 @@
 import React from "react";
 import { Source, Layer } from "react-map-gl";
-import { layoutStyleGeneral, paintHeatmap } from "../utils/mapStyle";
+import { layoutStyleGeneral, paintHeatmap, alphaRaster } from "../utils/mapStyle";
 
 import {
   MIN_ZOOM_HEADMAP,
@@ -80,6 +80,7 @@ const DataLayerWrap = ({ sourcesDataFlag, sourcesData, countryData }) => (
           layout={{
             visibility: sourcesDataFlag.population_layer ? "visible" : "none",
           }}
+          paint={alphaRaster}
         />
       </Source>
     )}

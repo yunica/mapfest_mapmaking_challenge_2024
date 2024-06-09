@@ -29,19 +29,19 @@ const Sidebar = ({
 
   return (
     <div className="absolute p-2 text-white bg-gray-200 rounded-lg lg:w-1/5 top-4 right-2 bottom-8 dark:bg-gray-700 md:w-1/4 sm:w-1/2 xs:w-1/2 ">
-      <h1 className="mb-4 text-xl text-center">
-        Countries
-        <label className="text-right">
-          <button
-            className="absolute px-2 text-sm text-white bg-gray-200 rounded top-4 right-2 dark:bg-gray-700 "
-            onClick={() => setIsSidebarVisible(false)}
-            data-tooltip-target="tooltip-hidde"
-            type="button"
-          >
-            <FiEyeOff />
-          </button>
-        </label>
-      </h1>
+      <div className="flex justify-between mb-4">
+        <h3 className="text-center text-md">
+          Population Density and Public Services Map
+        </h3>
+        <button
+          className="flex items-center px-2 text-sm text-white bg-gray-200 rounded dark:bg-gray-700"
+          onClick={() => setIsSidebarVisible(false)}
+          data-tooltip-target="tooltip-hidde"
+          type="button"
+        >
+          <FiEyeOff />
+        </button>
+      </div>
       <CustomSelect
         options={COUNTRIES}
         onChange={handleChangeSelect}

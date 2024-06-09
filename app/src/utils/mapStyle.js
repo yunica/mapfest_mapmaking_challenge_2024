@@ -131,3 +131,7 @@ export const paintHeatmap = (layer_id) => {
     ],
   };
 };
+
+export const alphaRaster = {
+  "raster-opacity": ["interpolate", ["linear"], ["zoom"], 3, 1, 16, 0.01],
+};

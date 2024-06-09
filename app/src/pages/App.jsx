@@ -1,26 +1,12 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
-import StaticMap, {
-  Source,
-  Layer,
-  NavigationControl,
-  ScaleControl,
-} from "react-map-gl";
-import {
-  COUNTRIES,
-  MIN_ZOOM_LAYOUT,
-  MIN_ZOOM_HEADMAP,
-  MAX_ZOOM_HEADMAP,
-  MAX_ZOOM_LAYOUT_DATA,
-  MIN_ZOOM_LAYOUT_DATA,
-  AMENITIES,
-} from "../components/constants";
+import React, { useRef, useEffect, useState } from "react";
+import StaticMap, { NavigationControl, ScaleControl } from "react-map-gl";
+import { COUNTRIES, AMENITIES } from "../components/constants";
 import DeckGL from "deck.gl";
 import { MapContext } from "react-map-gl/dist/esm/components/map.js";
 import { fetchLocalCsv } from "../utils/utils";
 import Sidebar from "../components/Sidebar";
 import CustomPopUp from "../components/popUp";
 import DataLayerWrap from "../components/dataLayer";
-
 
 const basename = (process.env.PUBLIC_URL || "").replace("//", "/");
 const API_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
@@ -63,7 +49,6 @@ function App() {
           healthcare_layer: false,
           transport_layer: false,
           population_layer: true,
-
         });
       } catch (err) {
         setSourcesData(null);
@@ -155,7 +140,11 @@ function App() {
             mapStyle="mapbox://styles/junica123/clx4w5d0p08dn01nx9vmbhyio"
             mapboxAccessToken={API_TOKEN}
           >
-            <DataLayerWrap sourcesDataFlag={sourcesDataFlag} sourcesData={sourcesData} countryData={selectedCountry}/>
+            <DataLayerWrap
+              sourcesDataFlag={sourcesDataFlag}
+              sourcesData={sourcesData}
+              countryData={selectedCountry}
+            />
             <ScaleControl position="top-left" />
             <NavigationControl position="top-left" />
             <CustomPopUp hoverInfo={hoverInfo} />
