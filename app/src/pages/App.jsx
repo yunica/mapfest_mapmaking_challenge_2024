@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import StaticMap, {
   Source,
   Layer,
@@ -8,19 +8,27 @@ import StaticMap, {
 import {
   COUNTRIES,
   MIN_ZOOM_LAYOUT,
+  MIN_ZOOM_HEADMAP,
+  MAX_ZOOM_HEADMAP,
   MAX_ZOOM_LAYOUT_DATA,
   MIN_ZOOM_LAYOUT_DATA,
   AMENITIES,
 } from "../components/constants";
-import { layoutStyleGeneral } from "../utils/mapStyle";
 import DeckGL from "deck.gl";
 import { MapContext } from "react-map-gl/dist/esm/components/map.js";
 import { fetchLocalCsv } from "../utils/utils";
 import Sidebar from "../components/Sidebar";
+import CustomPopUp from "../components/popUp";
+import DataLayerWrap from "../components/dataLayer";
+
 
 const basename = (process.env.PUBLIC_URL || "").replace("//", "/");
 const API_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
-const LAYERS_ACTION = ["school-layer", "antenas-layer"];
+const LAYERS_ACTION = [
+  "education-points",
+  "healthcare-points",
+  "trasport-points",
+];
 const initialViewState = {
   latitude: 14.0583,
   longitude: 108.2772,
@@ -35,6 +43,7 @@ function App() {
   const [sourcesData, setSourcesData] = useState(null);
   const [sourcesDataFlag, setSourcesDataFlag] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]);
+  const [hoverInfo, setHoverInfo] = useState(null);
 
   // fetch data
   useEffect(() => {
@@ -76,7 +85,25 @@ function App() {
     });
   };
   const handleMapClick = (event) => {};
-  const handleMapHover = (event) => {};
+  const handleMapHover = (event) => {
+    try {
+      const features = mapRef.current.queryRenderedFeatures([event.x, event.y]);
+      const new_features = features.filter(
+        (i) => i.layer && LAYERS_ACTION.includes(i.layer.id)
+      );
+
+      if (new_features.length) {
+        const i = { ...new_features[0], lngLat: event.coordinate };
+        setHoverInfo({ ...i });
+      } else {
+        setHoverInfo(null);
+      }
+    } catch (error) {
+      setHoverInfo(null);
+      console.error(error);
+    }
+  };
+
   const handleLoad = () => {
     const map = mapRef.current.getMap();
     // load images
@@ -103,7 +130,6 @@ function App() {
           });
       });
   };
-
   return (
     <div className="relative w-full h-screen bg-white dark:bg-slate-800">
       <div className="w-screen h-screen">
@@ -127,63 +153,10 @@ function App() {
             mapStyle="mapbox://styles/junica123/clx4w5d0p08dn01nx9vmbhyio"
             mapboxAccessToken={API_TOKEN}
           >
-            {sourcesDataFlag && sourcesData && sourcesData.educationData ? (
-              <Source
-                id="education-osm"
-                type="geojson"
-                data={sourcesData.educationData}
-              >
-                <Layer
-                  id="education-points"
-                  type="symbol"
-                  filter={
-                    sourcesDataFlag.education_layer ? null : ["==", "id", -1]
-                  }
-                  layout={layoutStyleGeneral}
-                  maxzoom={MAX_ZOOM_LAYOUT_DATA}
-                  minzoom={MIN_ZOOM_LAYOUT_DATA}
-                />
-              </Source>
-            ) : null}
-            {sourcesDataFlag && sourcesData && sourcesData.healthcareData ? (
-              <Source
-                id="healthcare-osm"
-                type="geojson"
-                data={sourcesData.healthcareData}
-              >
-                <Layer
-                  id="healthcare-points"
-                  type="symbol"
-                  filter={
-                    sourcesDataFlag.healthcare_layer ? null : ["==", "id", -1]
-                  }
-                  layout={layoutStyleGeneral}
-                  maxzoom={MAX_ZOOM_LAYOUT_DATA}
-                  minzoom={MIN_ZOOM_LAYOUT_DATA}
-                />
-              </Source>
-            ) : null}
-            {sourcesDataFlag && sourcesData && sourcesData.transportData ? (
-              <Source
-                id="trasport-osm"
-                type="geojson"
-                data={sourcesData.transportData}
-              >
-                <Layer
-                  id="trasport-points"
-                  type="symbol"
-                  filter={
-                    sourcesDataFlag.transport_layer ? null : ["==", "id", -1]
-                  }
-                  layout={layoutStyleGeneral}
-                  maxzoom={MAX_ZOOM_LAYOUT_DATA}
-                  minzoom={MIN_ZOOM_LAYOUT_DATA}
-                />
-              </Source>
-            ) : null}
-
+            <DataLayerWrap sourcesDataFlag={sourcesDataFlag} sourcesData={sourcesData} />
             <ScaleControl position="top-left" />
             <NavigationControl position="top-left" />
+            <CustomPopUp hoverInfo={hoverInfo} />
           </StaticMap>
         </DeckGL>
 
