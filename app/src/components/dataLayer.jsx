@@ -9,6 +9,9 @@ import {
   MIN_ZOOM_LAYOUT_DATA,
 } from "../components/constants";
 
+const TITLER_URL=process.env.REACT_APP_TITLER_URL || ""
+const S3_PATH=process.env.REACT_APP_S3_PATH || ""
+
 const DataLayer = ({ id, data, layerFlag, layout, maxzoom, minzoom }) => (
   <Source id={`${id}-osm`} type="geojson" data={data}>
     <Layer
@@ -30,7 +33,7 @@ const DataLayer = ({ id, data, layerFlag, layout, maxzoom, minzoom }) => (
   </Source>
 );
 
-const DataLayerWrap = ({ sourcesDataFlag, sourcesData }) => (
+const DataLayerWrap = ({ sourcesDataFlag, sourcesData, countryData }) => (
   <>
     {sourcesDataFlag && sourcesData && sourcesData.educationData && (
       <DataLayer
@@ -61,6 +64,24 @@ const DataLayerWrap = ({ sourcesDataFlag, sourcesData }) => (
         maxzoom={{ layout: MAX_ZOOM_LAYOUT_DATA, heatmap: MAX_ZOOM_HEADMAP }}
         minzoom={{ layout: MIN_ZOOM_LAYOUT_DATA, heatmap: MIN_ZOOM_HEADMAP }}
       />
+    )}
+    {sourcesDataFlag && (
+      <Source
+        id={`raster-osm`}
+        type="raster"
+        tiles={[
+          `${TITLER_URL}/{z}/{x}/{y}@1x?url=${S3_PATH}/${countryData.iso_code}_cog.tif&rescale=${countryData.rescale}&colormap_name=inferno`,
+        ]}
+        tileSize={256}
+      >
+        <Layer
+          id="pop-tif"
+          type="raster"
+          layout={{
+            visibility: sourcesDataFlag.population_layer ? "visible" : "none",
+          }}
+        />
+      </Source>
     )}
   </>
 );

@@ -62,6 +62,8 @@ function App() {
           education_layer: false,
           healthcare_layer: false,
           transport_layer: false,
+          population_layer: true,
+
         });
       } catch (err) {
         setSourcesData(null);
@@ -153,7 +155,7 @@ function App() {
             mapStyle="mapbox://styles/junica123/clx4w5d0p08dn01nx9vmbhyio"
             mapboxAccessToken={API_TOKEN}
           >
-            <DataLayerWrap sourcesDataFlag={sourcesDataFlag} sourcesData={sourcesData} />
+            <DataLayerWrap sourcesDataFlag={sourcesDataFlag} sourcesData={sourcesData} countryData={selectedCountry}/>
             <ScaleControl position="top-left" />
             <NavigationControl position="top-left" />
             <CustomPopUp hoverInfo={hoverInfo} />

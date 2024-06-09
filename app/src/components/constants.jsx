@@ -11,6 +11,7 @@ export const COUNTRIES = [
     name: "Viet Nam",
     name_code: "vietnam",
     iso_code: "VNM",
+    rescale: "0,160",
     center: {
       latitude: 14.0583,
       longitude: 108.2772,
@@ -20,7 +21,8 @@ export const COUNTRIES = [
     ico: <Svglao />,
     name: "Lao",
     name_code: "laos",
-    iso_code: "LM",
+    iso_code: "LAO",
+    rescale: "0,160",
     center: {
       latitude: 19.8563,
       longitude: 102.4955,
@@ -31,6 +33,7 @@ export const COUNTRIES = [
     name: "Myanmar",
     name_code: "myanmar",
     iso_code: "MMR",
+    rescale: "0,160",
     center: {
       latitude: 21.9162,
       longitude: 95.956,
@@ -41,6 +44,7 @@ export const COUNTRIES = [
     name: "Nepal",
     name_code: "nepal",
     iso_code: "NPL",
+    rescale: "0,160",
     center: {
       latitude: 28.3949,
       longitude: 84.124,
@@ -51,6 +55,7 @@ export const COUNTRIES = [
     name: "Afghanistan",
     name_code: "afghanistan",
     iso_code: "AFG",
+    rescale: "0,160",
     center: {
       latitude: 33.9391,
       longitude: 67.71,
@@ -61,6 +66,7 @@ export const COUNTRIES = [
     name: "Pakistan",
     name_code: "pakistan",
     iso_code: "PAK",
+    rescale: "0,160",
     center: {
       latitude: 30.3753,
       longitude: 69.3451,
