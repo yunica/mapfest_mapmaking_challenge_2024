@@ -2,7 +2,6 @@ import {
   MAX_ZOOM_LAYOUT_DATA,
   MIN_ZOOM_LAYOUT_DATA,
   MAX_ZOOM_HEADMAP,
-  MIN_ZOOM_HEADMAP,
 } from "../components/constants";
 // generic
 export const layoutStyleGeneral = {

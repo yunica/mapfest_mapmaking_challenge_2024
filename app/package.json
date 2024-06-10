@@ -17,9 +17,9 @@
     "start": "PUBLIC_URL=/mapfest_mapmaking_challenge_2024  react-scripts start",
     "predeploy": "PUBLIC_URL=/mapfest_mapmaking_challenge_2024  react-scripts build",
     "deploy": "gh-pages -d build",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --write ./**/*.{js,jsx,css,md,json} --config ./.prettierrc.json"
+    "lint": "eslint ./src/",
+    "lint:fix": "eslint ./src/ --fix",
+    "format": "prettier --write ./src/**/*.{js,jsx,css,md,json} --config ./.prettierrc.json"
   },
   "eslintConfig": {
     "extends": [
