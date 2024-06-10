@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/mapfest_mapmaking_challenge_2024/static/css/main.9e33ded7.css",
-    "main.js": "/mapfest_mapmaking_challenge_2024/static/js/main.4198a538.js",
+    "main.css": "/mapfest_mapmaking_challenge_2024/static/css/main.0656efaa.css",
+    "main.js": "/mapfest_mapmaking_challenge_2024/static/js/main.51966397.js",
     "static/js/453.d19fc75a.chunk.js": "/mapfest_mapmaking_challenge_2024/static/js/453.d19fc75a.chunk.js",
     "static/js/879.f1135a6d.chunk.js": "/mapfest_mapmaking_challenge_2024/static/js/879.f1135a6d.chunk.js",
     "index.html": "/mapfest_mapmaking_challenge_2024/index.html",
-    "main.9e33ded7.css.map": "/mapfest_mapmaking_challenge_2024/static/css/main.9e33ded7.css.map",
-    "main.4198a538.js.map": "/mapfest_mapmaking_challenge_2024/static/js/main.4198a538.js.map",
+    "main.0656efaa.css.map": "/mapfest_mapmaking_challenge_2024/static/css/main.0656efaa.css.map",
+    "main.51966397.js.map": "/mapfest_mapmaking_challenge_2024/static/js/main.51966397.js.map",
     "453.d19fc75a.chunk.js.map": "/mapfest_mapmaking_challenge_2024/static/js/453.d19fc75a.chunk.js.map",
     "879.f1135a6d.chunk.js.map": "/mapfest_mapmaking_challenge_2024/static/js/879.f1135a6d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9e33ded7.css",
-    "static/js/main.4198a538.js"
+    "static/css/main.0656efaa.css",
+    "static/js/main.51966397.js"
   ]
 }
