@@ -76,9 +76,9 @@ export const COUNTRIES = [
 
 export const MIN_ZOOM_LAYOUT = 4;
 export const MIN_ZOOM_LAYOUT_DATA = 8;
-export const MAX_ZOOM_LAYOUT_DATA = 16;
+export const MAX_ZOOM_LAYOUT_DATA = 17;
 export const MIN_ZOOM_HEADMAP = 4;
-export const MAX_ZOOM_HEADMAP = MIN_ZOOM_LAYOUT_DATA + 0.1;
+export const MAX_ZOOM_HEADMAP = MIN_ZOOM_LAYOUT_DATA + 0.4;
 
 export const AMENITIES = {
   hospital: 'hospital.svg',

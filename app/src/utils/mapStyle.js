@@ -91,19 +91,10 @@ export const paintHeatmap = (layer_id) => {
   }
 
   return {
-    'heatmap-weight': [
-      'interpolate',
-      ['linear'],
-      ['get', 'signal_index'],
-      0,
-      0,
-      MAX_ZOOM_HEADMAP,
-      1
-    ],
     'heatmap-intensity': ['interpolate', ['linear'], ['zoom'], 4, 0, MAX_ZOOM_HEADMAP, 1],
     'heatmap-color': heatmapColor,
-    'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 4, 2, MAX_ZOOM_HEADMAP, 20],
-    'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 4, 1, MAX_ZOOM_HEADMAP, 0]
+    'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 4, 3, MAX_ZOOM_HEADMAP, 6],
+    'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 4, 1, MAX_ZOOM_HEADMAP, 0.2]
   };
 };
 
