@@ -1,136 +1,112 @@
 import {
   MAX_ZOOM_LAYOUT_DATA,
   MIN_ZOOM_LAYOUT_DATA,
-  MAX_ZOOM_HEADMAP,
-} from "../components/constants";
+  MAX_ZOOM_HEADMAP
+} from '../components/constants';
 // generic
 export const layoutStyleGeneral = {
-  "icon-image": ["concat", ["get", "amenity"], "-icon"],
-  "icon-size": [
-    "interpolate",
-    ["linear"],
-    ["zoom"],
+  'icon-image': ['concat', ['get', 'amenity'], '-icon'],
+  'icon-size': [
+    'interpolate',
+    ['linear'],
+    ['zoom'],
     MIN_ZOOM_LAYOUT_DATA,
     0.11,
     MAX_ZOOM_LAYOUT_DATA,
-    0.4,
-  ],
+    0.4
+  ]
 };
 
 export const paintHeatmap = (layer_id) => {
   let heatmapColor;
 
   switch (layer_id) {
-    case "education":
+    case 'education':
       heatmapColor = [
-        "interpolate",
-        ["linear"],
-        ["heatmap-density"],
+        'interpolate',
+        ['linear'],
+        ['heatmap-density'],
         0,
-        "rgba(255, 255, 255, 0)",
+        'rgba(255, 255, 255, 0)',
         0.1,
-        "rgba(255, 255, 255, 0.1)",
+        'rgba(255, 255, 255, 0.1)',
         0.3,
-        "rgba(255, 255, 255, 0.3)",
+        'rgba(255, 255, 255, 0.3)',
         0.5,
-        "rgba(255, 255, 255, 0.5)",
+        'rgba(255, 255, 255, 0.5)',
         0.7,
-        "rgba(255, 255, 255, 0.7)",
+        'rgba(255, 255, 255, 0.7)',
         1,
-        "rgba(255, 255, 255, 1)",
+        'rgba(255, 255, 255, 1)'
       ];
       break;
-    case "healthcare":
+    case 'healthcare':
       heatmapColor = [
-        "interpolate",
-        ["linear"],
-        ["heatmap-density"],
+        'interpolate',
+        ['linear'],
+        ['heatmap-density'],
         0,
-        "rgba(199, 5, 5, 0)",
+        'rgba(199, 5, 5, 0)',
         0.1,
-        "#c70505",
+        '#c70505',
         0.3,
-        "#ff6b6b",
+        '#ff6b6b',
         0.5,
-        "#ff8c8c",
+        '#ff8c8c',
         0.7,
-        "#ffafaf",
+        '#ffafaf',
         1,
-        "#ffd1d1",
+        '#ffd1d1'
       ];
       break;
-    case "transport":
+    case 'transport':
       heatmapColor = [
-        "interpolate",
-        ["linear"],
-        ["heatmap-density"],
+        'interpolate',
+        ['linear'],
+        ['heatmap-density'],
         0,
-        "rgba(0, 0, 255, 0)",
+        'rgba(0, 0, 255, 0)',
         0.1,
-        "#0000ff",
+        '#0000ff',
         0.3,
-        "#6b6bff",
+        '#6b6bff',
         0.5,
-        "#8c8cff",
+        '#8c8cff',
         0.7,
-        "#afafff",
+        '#afafff',
         1,
-        "#d1d1ff",
+        '#d1d1ff'
       ];
       break;
     default:
       heatmapColor = [
-        "interpolate",
-        ["linear"],
-        ["heatmap-density"],
+        'interpolate',
+        ['linear'],
+        ['heatmap-density'],
         0,
-        "rgba(255, 255, 255, 0)",
+        'rgba(255, 255, 255, 0)',
         1,
-        "rgba(255, 255, 255, 1)",
+        'rgba(255, 255, 255, 1)'
       ];
   }
 
   return {
-    "heatmap-weight": [
-      "interpolate",
-      ["linear"],
-      ["get", "signal_index"],
+    'heatmap-weight': [
+      'interpolate',
+      ['linear'],
+      ['get', 'signal_index'],
       0,
       0,
       MAX_ZOOM_HEADMAP,
-      1,
+      1
     ],
-    "heatmap-intensity": [
-      "interpolate",
-      ["linear"],
-      ["zoom"],
-      4,
-      0,
-      MAX_ZOOM_HEADMAP,
-      1,
-    ],
-    "heatmap-color": heatmapColor,
-    "heatmap-radius": [
-      "interpolate",
-      ["linear"],
-      ["zoom"],
-      4,
-      2,
-      MAX_ZOOM_HEADMAP,
-      20,
-    ],
-    "heatmap-opacity": [
-      "interpolate",
-      ["linear"],
-      ["zoom"],
-      4,
-      1,
-      MAX_ZOOM_HEADMAP,
-      0,
-    ],
+    'heatmap-intensity': ['interpolate', ['linear'], ['zoom'], 4, 0, MAX_ZOOM_HEADMAP, 1],
+    'heatmap-color': heatmapColor,
+    'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 4, 2, MAX_ZOOM_HEADMAP, 20],
+    'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 4, 1, MAX_ZOOM_HEADMAP, 0]
   };
 };
 
 export const alphaRaster = {
-  "raster-opacity": ["interpolate", ["linear"], ["zoom"], 3, 1, 16, 0.01],
+  'raster-opacity': ['interpolate', ['linear'], ['zoom'], 3, 1, 16, 0.01]
 };

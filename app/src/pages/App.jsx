@@ -14,7 +14,7 @@ const LAYERS_ACTION = ['education-points', 'healthcare-points', 'transport-point
 const initialViewState = {
   latitude: 14.0583,
   longitude: 108.2772,
-  zoom: 8
+  zoom: 10
 };
 
 function App() {
