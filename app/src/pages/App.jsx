@@ -26,10 +26,12 @@ function App() {
   const [sourcesDataFlag, setSourcesDataFlag] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]);
   const [hoverInfo, setHoverInfo] = useState(null);
+  const [osmInfo, setOsmInfo] = useState(null);
 
   // fetch data
   useEffect(() => {
     const fetchData = async ({ name_code }) => {
+      setOsmInfo(null);
       try {
         const educationData = await fetchLocalCsv(name_code, 'education');
         const healthcareData = await fetchLocalCsv(name_code, 'healthcare');
@@ -41,10 +43,10 @@ function App() {
           transportData
         });
         setSourcesDataFlag({
-          education_layer: false,
-          healthcare_layer: false,
-          transport_layer: false,
-          population_layer: true
+          education_osm_data_layer: false,
+          healthcare_osm_data_layer: false,
+          transport_osm_data_layer: false,
+          population_data_layer: true
         });
       } catch (err) {
         setSourcesData(null);
@@ -67,7 +69,22 @@ function App() {
       [layer_id]: event.target.checked
     });
   };
-  const handleMapClick = (event) => {};
+  const handleMapClick = (event) => {
+    try {
+      const features = mapRef.current.queryRenderedFeatures([event.x, event.y]);
+      const new_features = features.filter((i) => i.layer && LAYERS_ACTION.includes(i.layer.id));
+
+      if (new_features.length) {
+        const i = { ...new_features[0], lngLat: event.coordinate };
+        setOsmInfo({ ...i });
+      } else {
+        setOsmInfo(null);
+      }
+    } catch (error) {
+      setOsmInfo(null);
+      console.error(error);
+    }
+  };
   const handleMapHover = (event) => {
     try {
       const features = mapRef.current.queryRenderedFeatures([event.x, event.y]);
@@ -121,8 +138,7 @@ function App() {
           controller={true}
           ContextProvider={MapContext.Provider}
           onClick={handleMapClick}
-          onHover={handleMapHover}
-        >
+          onHover={handleMapHover}>
           <StaticMap
             ref={mapRef}
             scrollZoom={true}
@@ -132,8 +148,7 @@ function App() {
             maxZoom={15}
             doubleClickZoom={true}
             mapStyle="mapbox://styles/junica123/clx4w5d0p08dn01nx9vmbhyio"
-            mapboxAccessToken={API_TOKEN}
-          >
+            mapboxAccessToken={API_TOKEN}>
             <DataLayerWrap
               sourcesDataFlag={sourcesDataFlag}
               sourcesData={sourcesData}
@@ -150,6 +165,7 @@ function App() {
           selectedCountry={selectedCountry}
           layersCheckbox={sourcesDataFlag}
           setCheckboxLayer={handlesetSourcesDataFlag}
+          osmInfo={osmInfo}
         />
       </div>
     </div>

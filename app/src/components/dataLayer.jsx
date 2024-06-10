@@ -39,7 +39,7 @@ const DataLayerWrap = ({ sourcesDataFlag, sourcesData, countryData }) => (
       <DataLayer
         id="education"
         data={sourcesData.educationData}
-        layerFlag={sourcesDataFlag.education_layer}
+        layerFlag={sourcesDataFlag.education_osm_data_layer}
         layout={layoutStyleGeneral}
         maxzoom={{ layout: MAX_ZOOM_LAYOUT_DATA, heatmap: MAX_ZOOM_HEADMAP }}
         minzoom={{ layout: MIN_ZOOM_LAYOUT_DATA, heatmap: MIN_ZOOM_HEADMAP }}
@@ -49,7 +49,7 @@ const DataLayerWrap = ({ sourcesDataFlag, sourcesData, countryData }) => (
       <DataLayer
         id="healthcare"
         data={sourcesData.healthcareData}
-        layerFlag={sourcesDataFlag.healthcare_layer}
+        layerFlag={sourcesDataFlag.healthcare_osm_data_layer}
         layout={layoutStyleGeneral}
         maxzoom={{ layout: MAX_ZOOM_LAYOUT_DATA, heatmap: MAX_ZOOM_HEADMAP }}
         minzoom={{ layout: MIN_ZOOM_LAYOUT_DATA, heatmap: MIN_ZOOM_HEADMAP }}
@@ -59,7 +59,7 @@ const DataLayerWrap = ({ sourcesDataFlag, sourcesData, countryData }) => (
       <DataLayer
         id="transport"
         data={sourcesData.transportData}
-        layerFlag={sourcesDataFlag.transport_layer}
+        layerFlag={sourcesDataFlag.transport_osm_data_layer}
         layout={layoutStyleGeneral}
         maxzoom={{ layout: MAX_ZOOM_LAYOUT_DATA, heatmap: MAX_ZOOM_HEADMAP }}
         minzoom={{ layout: MIN_ZOOM_LAYOUT_DATA, heatmap: MIN_ZOOM_HEADMAP }}
@@ -78,7 +78,7 @@ const DataLayerWrap = ({ sourcesDataFlag, sourcesData, countryData }) => (
           id="pop-tif"
           type="raster"
           layout={{
-            visibility: sourcesDataFlag.population_layer ? 'visible' : 'none'
+            visibility: sourcesDataFlag.population_data_layer ? 'visible' : 'none'
           }}
           paint={alphaRaster}
         />
