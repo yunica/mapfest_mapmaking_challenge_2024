@@ -32,7 +32,7 @@ const popUp = ({ hoverInfo }) => {
         </p>
         <p className="">
           <span className="mr-1 font-normal ">Name:</span>
-          <span className="font-bold">{properties.name} </span>
+          <span className="font-bold">{properties.name || ' -- '} </span>
         </p>
         <p className="">
           <span className="mr-1 font-normal ">OSM ID:</span>

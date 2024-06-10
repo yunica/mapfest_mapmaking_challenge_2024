@@ -10,7 +10,7 @@ import DataLayerWrap from '../components/dataLayer';
 
 const basename = (process.env.PUBLIC_URL || '').replace('//', '/');
 const API_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
-const LAYERS_ACTION = ['education-points', 'healthcare-points', 'trasport-points'];
+const LAYERS_ACTION = ['education-points', 'healthcare-points', 'transport-points'];
 const initialViewState = {
   latitude: 14.0583,
   longitude: 108.2772,
