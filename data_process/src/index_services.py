@@ -8,29 +8,7 @@ from scipy.ndimage import gaussian_filter
 from rasterio.enums import Resampling
 
 
-@click.command(short_help="Create index")
-@click.option("--population_path", help="Input tif file", type=str)
-@click.option("--education_path", help="Input tif file", type=str)
-@click.option("--healthcare_path", help="Input tif file", type=str)
-@click.option("--transport_path", help="Input tif file", type=str)
-@click.option("--tif_output", help="Output tif file", type=str)
-def run(population_path, education_path, healthcare_path, transport_path, tif_output):
-    # with rasterio.open(tif_input) as src:
-    #     tif_data = src.read(1)
-    #     profile = src.profile
-    # nodata_value = -99999
-    # max_value = tif_data.max()
-    # filtered_data = np.where(tif_data > 0, tif_data / max_value, nodata_value)
-    #
-    # profile.update(dtype=rasterio.float32, count=1, nodata=nodata_value)
-    # with rasterio.open(tif_output, "w", **profile) as dst:
-    #     dst.write(filtered_data.astype(rasterio.float32), 1)
-    raster_popu = rio.open(population_path)
-    raster_educ = rio.open(education_path)
-    raster_heal = rio.open(healthcare_path)
-    raster_trans = rio.open(transport_path)
-
-    all_rasters = [raster_educ, raster_heal, raster_trans]
+def fix_size_rasters(all_rasters, nodata_value):
     # found min, max
     minx, miny, maxx, maxy = None, None, None, None
     for raster in all_rasters:
@@ -45,6 +23,7 @@ def run(population_path, education_path, healthcare_path, transport_path, tif_ou
             maxy = bounds.top
 
     profile = all_rasters[0].profile
+
     profile.update(
         width=int((maxx - minx) / all_rasters[0].res[0]),
         height=int((maxy - miny) / all_rasters[0].res[1]),
@@ -59,9 +38,8 @@ def run(population_path, education_path, healthcare_path, transport_path, tif_ou
     )
 
     aligned_rasters = []
-    nodata_value = profile.get("nodata", -9999)
     # complete
-    for raster, source in zip(all_rasters, ["education", "healthcare", "transport"]):
+    for raster in all_rasters:
         # matrix nodata
         data = np.full(
             (profile["height"], profile["width"]),
@@ -100,21 +78,50 @@ def run(population_path, education_path, healthcare_path, transport_path, tif_ou
         ] = original_data[:final_height, :final_width]
 
         data_array = np.array(data)
+        aligned_rasters.append(data_array)
+    return aligned_rasters, profile
 
-        factor = 1
-        if source == "healthcare":
-            factor = 20
-        elif source == "education":
-            factor = 10
 
-        aligned_rasters.append(data_array * factor)
+@click.command(short_help="Create index")
+@click.option("--population_path", help="Input tif file", type=str)
+@click.option("--education_path", help="Input tif file", type=str)
+@click.option("--healthcare_path", help="Input tif file", type=str)
+@click.option("--transport_path", help="Input tif file", type=str)
+@click.option("--tif_output", help="Output tif file", type=str)
+def run(population_path, education_path, healthcare_path, transport_path, tif_output):
+    # with rasterio.open(tif_input) as src:
+    #     tif_data = src.read(1)
+    #     profile = src.profile
+    # nodata_value = -99999
+    # max_value = tif_data.max()
+    # filtered_data = np.where(tif_data > 0, tif_data / max_value, nodata_value)
+    #
+    # profile.update(dtype=rasterio.float32, count=1, nodata=nodata_value)
+    # with rasterio.open(tif_output, "w", **profile) as dst:
+    #     dst.write(filtered_data.astype(rasterio.float32), 1)
 
-    result = np.sum(aligned_rasters, axis=0)
-    result = np.where(result > 0, result, nodata_value)
+    raster_popu = rio.open(population_path)
 
-    result[np.isnan(result)] = nodata_value
+    raster_educ = rio.open(education_path)
+    raster_heal = rio.open(healthcare_path)
+    raster_trans = rio.open(transport_path)
+
+    profile = raster_educ.profile
+    nodata_value = profile.get("nodata", -9999)
     profile.update(nodata=nodata_value)
-    with rio.open(tif_output, "w", **profile) as dst:
+
+    raster_osm_data = [raster_educ, raster_heal, raster_trans]
+    aligned_rasters, custom_profile = fix_size_rasters(raster_osm_data, nodata_value)
+    # operate rastes
+    raster_osm_pond = [
+        r_matrix * factor for r_matrix, factor in zip(aligned_rasters, [1, 1, 1])
+    ]
+    result = np.sum(raster_osm_pond, axis=0)
+    max_value = result.max()
+    result = np.where(result > 0, result, nodata_value)
+    result[np.isnan(result)] = nodata_value
+
+    with rio.open(tif_output, "w", **custom_profile) as dst:
         dst.write(result, 1)
 
 
