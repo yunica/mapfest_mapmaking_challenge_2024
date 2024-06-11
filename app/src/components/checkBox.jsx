@@ -9,9 +9,6 @@ const checkBox = ({ value, text, handleChange }) => {
   const textLabel = text.replaceAll('_', ' ');
   const textIco = text.split('_')[0];
   let ico, legend;
-  const colors = ['linear-gradient(to right, #FF0000, #FFFF00, #00FF00)'];
-
-  const milestones = ['Low', 'Medium', 'High'];
 
   switch (textIco) {
     case 'education':
@@ -25,11 +22,11 @@ const checkBox = ({ value, text, handleChange }) => {
       break;
     case 'population':
       ico = <FaPeopleRoof size={20} color="#ffcb23" />;
-      legend = <LegendColor colors={colors} milestones={milestones} />
+      legend = <LegendColor colors={['linear-gradient(to right, #420a68, #932667, #dd5139, #fca40b, #fcffa4)']} milestones={['Low', 'Medium', 'High']} />
       break;
     case 'index':
       ico = <TbHomePlus size={22} color="#ff5151" />;
-      legend = <LegendColor colors={colors} milestones={milestones} />
+      legend = <LegendColor colors={['linear-gradient(to right, #045482, #92c5de, #f7f7f7, #f4a582, #ca0020)']} milestones={['Low', 'Medium', 'High']} />
 
       break;
     default:
