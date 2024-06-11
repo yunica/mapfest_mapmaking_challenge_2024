@@ -5,6 +5,7 @@ import CustomSelect from './select';
 import { COUNTRIES } from './constants';
 import CheckBox from './checkBox';
 import OsmData from './osmData';
+
 const Sidebar = ({
   handleChangeSelect,
   selectedCountry,
@@ -31,7 +32,9 @@ const Sidebar = ({
     <div className="absolute p-2 text-white bg-gray-200 rounded-lg lg:w-1/5 top-4 right-2 bottom-8 dark:bg-gray-700 md:w-1/4 sm:w-1/2 xs:w-1/2 ">
       <div className="flex flex-col">
         <div className="flex justify-between mb-4">
-          <h3 className="text-center text-md ">Public Services and Population Density Evaluation</h3>
+          <h3 className="text-center text-md ">
+            Public Services and Population Density Evaluation
+          </h3>
           <button
             className="flex items-center px-2 text-sm text-white bg-gray-200 rounded dark:bg-gray-700"
             onClick={() => setIsSidebarVisible(false)}
@@ -45,7 +48,7 @@ const Sidebar = ({
           onChange={handleChangeSelect}
           selectedValue={selectedCountry}
         />
-        <div className="layers">
+        <div className="my-1">
           <h3 className="mb-2">Layers</h3>
           <div>
             {layersCheckbox && Object.keys(layersCheckbox).length
@@ -63,7 +66,7 @@ const Sidebar = ({
         <div
           className="flex flex-col flex-auto h-full overflow-y-auto"
           style={{
-            maxHeight: 'calc(100vh - 32px - 15px - 16px -  48px - 16px - 66px - 16px - 144px )'
+            maxHeight: 'calc(100vh - 32px - 15px - 16px -  72px - 16px - 66px - 16px - 236px )'
           }}>
           <div className="flex-grow overflow-auto min-h-[30vh]">
             <h3 className="mb-1">Description</h3>
