@@ -1,6 +1,6 @@
 import React from 'react';
 import { Source, Layer } from 'react-map-gl';
-import { layoutStyleGeneral, paintHeatmap, alphaRaster } from '../utils/mapStyle';
+import { layoutStyleGeneral, paintHeatmap, alphaRaster, alphaRasterIndex } from '../utils/mapStyle';
 
 import {
   MIN_ZOOM_HEADMAP,
@@ -65,6 +65,25 @@ const DataLayerWrap = ({ sourcesDataFlag, sourcesData, countryData }) => (
         minzoom={{ layout: MIN_ZOOM_LAYOUT_DATA, heatmap: MIN_ZOOM_HEADMAP }}
       />
     )}
+        {sourcesDataFlag && (
+      <Source
+        id={`index_services`}
+        type="raster"
+        tiles={[
+          `${TITLER_URL}/{z}/{x}/{y}@1x?url=${S3_PATH}/${countryData.iso_code}_index_services_cog.tif&rescale=0,1&colormap_name=rdbu_r`
+        ]}
+        tileSize={256}
+      >
+        <Layer
+          id="index-tif"
+          type="raster"
+          layout={{
+            visibility: sourcesDataFlag.index_services_layer ? 'visible' : 'none'
+          }}
+          paint={alphaRasterIndex}
+        />
+      </Source>
+    )}
     {sourcesDataFlag && (
       <Source
         id={`raster-osm`}
@@ -84,6 +103,7 @@ const DataLayerWrap = ({ sourcesDataFlag, sourcesData, countryData }) => (
         />
       </Source>
     )}
+
   </>
 );
 

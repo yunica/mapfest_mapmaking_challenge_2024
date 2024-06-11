@@ -31,7 +31,7 @@ const Sidebar = ({
     <div className="absolute p-2 text-white bg-gray-200 rounded-lg lg:w-1/5 top-4 right-2 bottom-8 dark:bg-gray-700 md:w-1/4 sm:w-1/2 xs:w-1/2 ">
       <div className="flex flex-col">
         <div className="flex justify-between mb-4">
-          <h3 className="text-center text-md">Population Density and Public Services Map</h3>
+          <h3 className="text-center text-md ">Public Services and Population Density Evaluation</h3>
           <button
             className="flex items-center px-2 text-sm text-white bg-gray-200 rounded dark:bg-gray-700"
             onClick={() => setIsSidebarVisible(false)}
@@ -67,16 +67,11 @@ const Sidebar = ({
           }}>
           <div className="flex-grow overflow-auto min-h-[30vh]">
             <h3 className="mb-1">Description</h3>
-            <p className='text-sm text-justify '>
-              The app showcases the population distribution
-              across various regions, including Pakistan, Afghanistan, Nepal, Myanmar, Laos, and
-              Vietnam, alongside the location of a variety of public services obtained from
-              OpenStreetMap. The aim is to assess whether the quantity of available services is
-              adequate relative to the population size in these areas. This visualization allows for
-              the identification of areas with high population density and limited service
-              availability, as well as areas with a higher availability of services in proportion to
-              the resident population. These findings can be instrumental in planning and
-              policymaking efforts aimed at improving access to basic services in these regions.
+            <p className="text-sm text-justify ">
+              Utilizing population datasets and OpenStreetMap, this application conducts a
+              comprehensive analysis of population distribution and public service coverage. It
+              identifies high-density areas lacking essential services, offering invaluable insights
+              for urban planning and policy development.
             </p>
           </div>
           <OsmData osmInfo={osmInfo} />

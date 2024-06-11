@@ -1,6 +1,7 @@
 import { FaRegHospital } from 'react-icons/fa';
 import { MdOutlineDirectionsTransit } from 'react-icons/md';
 import { FaPeopleRoof , FaSchoolFlag} from "react-icons/fa6";
+import { TbHomePlus } from "react-icons/tb";
 
 const checkBox = ({ value, text, handleChange }) => {
   if (!text) return null;
@@ -9,16 +10,19 @@ const checkBox = ({ value, text, handleChange }) => {
   let ico = null;
   switch (textIco) {
     case 'education':
-      ico = <FaSchoolFlag size={18} />;
+      ico = <FaSchoolFlag size={20} />;
       break;
     case 'healthcare':
-      ico = <FaRegHospital size={18} color="#ff5151" />;
+      ico = <FaRegHospital size={20} color="#ff5151" />;
       break;
     case 'transport':
       ico = <MdOutlineDirectionsTransit size={20} color="#3778ff" />;
       break;
     case 'population':
       ico = <FaPeopleRoof size={20} color="#ffcb23" />;
+      break;
+    case 'index':
+      ico = <TbHomePlus size={22} color="#ff5151" />;
       break;
     default:
       break;
