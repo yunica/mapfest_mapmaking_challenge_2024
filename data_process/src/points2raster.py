@@ -8,15 +8,19 @@ from scipy.ndimage import gaussian_filter
 
 @click.command(short_help="Create geo tiff")
 @click.option("--geojson_path", help="Input geojson", type=str)
+@click.option("--boundary_path", help="Input geojson", type=str)
 @click.option("--tif_output", help="Output tif file", type=str)
-def run(geojson_path, tif_output):
+def run(geojson_path, boundary_path, tif_output):
     gdf = gpd.read_file(geojson_path)
+    gdf_boundary = gpd.read_file(boundary_path)
     gdf.set_crs("EPSG:4326", inplace=True)
     gdf["geometry"] = gdf.geometry.centroid
-    coords = np.array([(x, y) for x, y in zip(gdf.geometry.x, gdf.geometry.y)])
+
+    gdf_filter = gdf.sjoin(gdf_boundary, how="inner")
+    coords = np.array([(x, y) for x, y in zip(gdf_filter.geometry.x, gdf_filter.geometry.y)])
 
     cell_size = 0.00083333333
-    x_min, y_min, x_max, y_max = gdf.total_bounds
+    x_min, y_min, x_max, y_max = gdf_filter.total_bounds
     width = int((x_max - x_min) / cell_size)
     height = int((y_max - y_min) / cell_size)
     transform = from_origin(x_min, y_max, cell_size, cell_size)
@@ -38,7 +42,7 @@ def run(geojson_path, tif_output):
         width=heatmap.shape[1],
         count=1,
         dtype=heatmap.dtype,
-        crs=gdf.crs,
+        crs=gdf_filter.crs,
         transform=transform,
         nodata=0,
         compress="LZW",
