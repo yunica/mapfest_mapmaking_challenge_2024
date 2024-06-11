@@ -15,7 +15,8 @@ const popUp = ({ hoverInfo }) => {
       latitude={lngLat[1]}
       offset={[0, -10]}
       closeButton={false}
-      className="county-info">
+      className="county-info"
+    >
       <div className="space-y-1 text-gray-700">
         {amenityIco && (
           <img
@@ -38,8 +39,9 @@ const popUp = ({ hoverInfo }) => {
           <span className="font-bold">
             <a
               href={`https://www.openstreetmap.org/${properties.id}`}
-              rel='noreferrer'
-              target='_blank'>
+              rel="noreferrer"
+              target="_blank"
+            >
               {properties.id}
             </a>
           </span>

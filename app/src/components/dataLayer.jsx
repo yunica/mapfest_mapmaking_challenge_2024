@@ -65,7 +65,7 @@ const DataLayerWrap = ({ sourcesDataFlag, sourcesData, countryData }) => (
         minzoom={{ layout: MIN_ZOOM_LAYOUT_DATA, heatmap: MIN_ZOOM_HEADMAP }}
       />
     )}
-        {sourcesDataFlag && (
+    {sourcesDataFlag && (
       <Source
         id={`index_services`}
         type="raster"
@@ -78,7 +78,7 @@ const DataLayerWrap = ({ sourcesDataFlag, sourcesData, countryData }) => (
           id="index-tif"
           type="raster"
           layout={{
-            visibility: sourcesDataFlag.index_services_layer ? 'visible' : 'none'
+            visibility: sourcesDataFlag.services_inaccessibility_index_layer ? 'visible' : 'none'
           }}
           paint={alphaRasterIndex}
         />
@@ -97,13 +97,12 @@ const DataLayerWrap = ({ sourcesDataFlag, sourcesData, countryData }) => (
           id="pop-tif"
           type="raster"
           layout={{
-            visibility: sourcesDataFlag.population_data_layer ? 'visible' : 'none'
+            visibility: sourcesDataFlag.population_density_layer ? 'visible' : 'none'
           }}
           paint={alphaRaster}
         />
       </Source>
     )}
-
   </>
 );
 

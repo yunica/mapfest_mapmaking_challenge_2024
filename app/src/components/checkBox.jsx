@@ -22,11 +22,21 @@ const checkBox = ({ value, text, handleChange }) => {
       break;
     case 'population':
       ico = <FaPeopleRoof size={20} color="#ffcb23" />;
-      legend = <LegendColor colors={['linear-gradient(to right, #420a68, #932667, #dd5139, #fca40b, #fcffa4)']} milestones={['Low', 'Medium', 'High']} />
+      legend = (
+        <LegendColor
+          colors={['linear-gradient(to right, #420a68, #932667, #dd5139, #fca40b, #fcffa4)']}
+          milestones={['Low', 'Medium', 'High']}
+        />
+      );
       break;
-    case 'index':
+    case 'services':
       ico = <TbHomePlus size={22} color="#ff5151" />;
-      legend = <LegendColor colors={['linear-gradient(to right, #045482, #92c5de, #f7f7f7, #f4a582, #ca0020)']} milestones={['Low', 'Medium', 'High']} />
+      legend = (
+        <LegendColor
+          colors={['linear-gradient(to right, #045482, #92c5de, #f7f7f7, #f4a582, #ca0020)']}
+          milestones={['Low', 'Medium', 'High']}
+        />
+      );
 
       break;
     default:

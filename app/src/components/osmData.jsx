@@ -19,7 +19,8 @@ const osmData = ({ osmInfo }) => {
             href={`https://www.openstreetmap.org/${properties.id}`}
             rel="noreferrer"
             target="_blank"
-            className="text-blue-400 underline hover:no-underline">
+            className="text-blue-400 underline hover:no-underline"
+          >
             {properties.id}
           </a>
         </span>

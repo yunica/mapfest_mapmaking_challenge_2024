@@ -46,8 +46,8 @@ function App() {
           education_osm_data_layer: false,
           healthcare_osm_data_layer: false,
           transport_osm_data_layer: false,
-          population_data_layer: false,
-          index_services_layer: true
+          population_density_layer: false,
+          services_inaccessibility_index_layer: true
         });
       } catch (err) {
         setSourcesData(null);
@@ -139,7 +139,8 @@ function App() {
           controller={true}
           ContextProvider={MapContext.Provider}
           onClick={handleMapClick}
-          onHover={handleMapHover}>
+          onHover={handleMapHover}
+        >
           <StaticMap
             ref={mapRef}
             scrollZoom={true}
@@ -149,7 +150,8 @@ function App() {
             maxZoom={15}
             doubleClickZoom={true}
             mapStyle="mapbox://styles/junica123/clx4w5d0p08dn01nx9vmbhyio"
-            mapboxAccessToken={API_TOKEN}>
+            mapboxAccessToken={API_TOKEN}
+          >
             <DataLayerWrap
               sourcesDataFlag={sourcesDataFlag}
               sourcesData={sourcesData}
