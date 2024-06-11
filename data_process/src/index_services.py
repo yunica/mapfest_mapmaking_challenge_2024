@@ -6,9 +6,10 @@ from rasterio.transform import from_origin
 from scipy.fft._pocketfft import dst
 from scipy.ndimage import gaussian_filter
 from rasterio.enums import Resampling
+import scipy.interpolate
 
 
-def fix_size_rasters(all_rasters, nodata_value):
+def fix_size_rasters(all_rasters, nodata_value=0):
     # found min, max
     minx, miny, maxx, maxy = None, None, None, None
     for raster in all_rasters:
@@ -41,9 +42,8 @@ def fix_size_rasters(all_rasters, nodata_value):
     # complete
     for raster in all_rasters:
         # matrix nodata
-        data = np.full(
+        data = np.zeros(
             (profile["height"], profile["width"]),
-            nodata_value,
             dtype=raster.meta["dtype"],
         )
 
@@ -89,37 +89,37 @@ def fix_size_rasters(all_rasters, nodata_value):
 @click.option("--transport_path", help="Input tif file", type=str)
 @click.option("--tif_output", help="Output tif file", type=str)
 def run(population_path, education_path, healthcare_path, transport_path, tif_output):
-    # with rasterio.open(tif_input) as src:
-    #     tif_data = src.read(1)
-    #     profile = src.profile
-    # nodata_value = -99999
-    # max_value = tif_data.max()
-    # filtered_data = np.where(tif_data > 0, tif_data / max_value, nodata_value)
-    #
-    # profile.update(dtype=rasterio.float32, count=1, nodata=nodata_value)
-    # with rasterio.open(tif_output, "w", **profile) as dst:
-    #     dst.write(filtered_data.astype(rasterio.float32), 1)
-
     raster_popu = rio.open(population_path)
-
+    #
     raster_educ = rio.open(education_path)
     raster_heal = rio.open(healthcare_path)
     raster_trans = rio.open(transport_path)
 
-    profile = raster_educ.profile
-    nodata_value = profile.get("nodata", -9999)
-    profile.update(nodata=nodata_value)
+    nodata_value = 0
 
-    raster_osm_data = [raster_educ, raster_heal, raster_trans]
+    raster_osm_data = [raster_educ, raster_heal, raster_trans, raster_popu]
     aligned_rasters, custom_profile = fix_size_rasters(raster_osm_data, nodata_value)
-    # operate rastes
+    custom_profile.update(nodata=nodata_value)
+    aligned_rasters_osm = aligned_rasters[:-1]
+    # osm rasters
     raster_osm_pond = [
-        r_matrix * factor for r_matrix, factor in zip(aligned_rasters, [1, 1, 1])
+        r_matrix * factor
+        for r_matrix, factor in zip(aligned_rasters_osm, [6, 12, 1])
     ]
-    result = np.sum(raster_osm_pond, axis=0)
-    max_value = result.max()
-    result = np.where(result > 0, result, nodata_value)
-    result[np.isnan(result)] = nodata_value
+    result_osm = np.sum(raster_osm_pond, axis=0)
+    # interpolation
+    mask_zeros = (result_osm == 0)
+    epsilon = 1e-6
+    result_osm_log = np.log(result_osm + epsilon)
+    result_osm_log_normalized = (result_osm_log - result_osm_log.min()) / (result_osm_log.max() - result_osm_log.min())
+    result_osm_log_normalized[mask_zeros] = 0
+    # population
+    pop_matrix = aligned_rasters[-1]
+    pop_matrix = np.where(pop_matrix > 500, 500, pop_matrix)
+    result_pop = np.where(pop_matrix > 0, 1 - (pop_matrix / 500), 0)
+    # result
+    result = result_pop - result_osm_log_normalized
+    result = np.where(result > nodata_value, result, nodata_value)
 
     with rio.open(tif_output, "w", **custom_profile) as dst:
         dst.write(result, 1)
