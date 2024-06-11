@@ -11,10 +11,11 @@ from scipy.ndimage import gaussian_filter
 @click.option("--tif_output", help="Output tif file", type=str)
 def run(geojson_path, tif_output):
     gdf = gpd.read_file(geojson_path)
+    gdf.set_crs("EPSG:4326", inplace=True)
     gdf["geometry"] = gdf.geometry.centroid
     coords = np.array([(x, y) for x, y in zip(gdf.geometry.x, gdf.geometry.y)])
 
-    cell_size = 0.0008333
+    cell_size = 0.00083333333
     x_min, y_min, x_max, y_max = gdf.total_bounds
     width = int((x_max - x_min) / cell_size)
     height = int((y_max - y_min) / cell_size)
@@ -43,6 +44,7 @@ def run(geojson_path, tif_output):
         compress="LZW",
     ) as dst:
         dst.write(heatmap, 1)
+        print(f"tif saved to {tif_output}")
 
 
 if __name__ == "__main__":
