@@ -9,7 +9,8 @@ import gzip
 @click.option("--geojson_inp", help="Input geojso file", type=str)
 @click.option("--geojson_geometry", help="Input geojso geometry file", type=str)
 @click.option("--csv_out", help="Output geojso file", type=str)
-def run(geojson_inp, geojson_geometry, csv_out):
+@click.option("--geojson_out_path", help="Output geojso file", type=str)
+def run(geojson_inp, geojson_geometry, csv_out, geojson_out_path):
     gdf = gpd.read_file(geojson_inp)
     gdf_geometry = gpd.read_file(geojson_geometry)
     gdf.set_crs(epsg=4326, inplace=True)
@@ -23,8 +24,9 @@ def run(geojson_inp, geojson_geometry, csv_out):
     gdf_filter_.dropna(subset=['amenity'], inplace=True)
     with gzip.open(csv_out, 'wt', encoding='utf-8') as f:
         gdf_filter_.to_csv(f, index=False)
-    # show all amenity
-
+    
+    with gzip.open(geojson_out_path, 'wb') as f:
+        f.write(gdf_geometry.to_json().encode('utf-8'))
 
 if __name__ == "__main__":
     run()
