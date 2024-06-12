@@ -6,21 +6,25 @@ import LegendColor from './legendColor';
 
 const checkBox = ({ value, text, handleChange }) => {
   if (!text) return null;
-  const textLabel = text.replaceAll('_', ' ');
   const textIco = text.split('_')[0];
-  let ico, legend;
+  let ico, legend, textLabel ;
 
   switch (textIco) {
     case 'education':
+      textLabel = 'education - osm'
       ico = <FaSchoolFlag size={20} />;
       break;
     case 'healthcare':
+      textLabel = 'healthcare - osm'
       ico = <FaRegHospital size={20} color="#ff5151" />;
       break;
     case 'transport':
+      textLabel = 'transport - osm'
       ico = <MdOutlineDirectionsTransit size={20} color="#3778ff" />;
       break;
     case 'population':
+      textLabel = 'population - wordpop '
+
       ico = <FaPeopleRoof size={20} color="#ffcb23" />;
       legend = (
         <LegendColor
@@ -30,6 +34,7 @@ const checkBox = ({ value, text, handleChange }) => {
       );
       break;
     case 'services':
+      textLabel = 'services inaccessibility index '
       ico = <TbHomePlus size={22} color="#ff5151" />;
       legend = (
         <LegendColor

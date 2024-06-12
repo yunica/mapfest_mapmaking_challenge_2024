@@ -45,13 +45,33 @@ export const fetchLocalCsv = async (name_code, source) => {
         responseType: 'arraybuffer'
       }
     );
-    const responseSchoolString = pako.inflate(responseSchool.data, {
+    const responseString = pako.inflate(responseSchool.data, {
       to: 'string'
     });
-    let schoolObject = object2feature(csv2object(responseSchoolString));
-    return schoolObject;
+    let jsonData = object2feature(csv2object(responseString));
+    return jsonData;
   } catch (err) {
     console.error(err);
     return null;
   }
 };
+
+export const fetchLocalGeojson = async (name_code, source) => {
+  try {
+    const responseSchool = await axios.get(
+      `${basename}/assets/csv_file/${name_code}_${source}.geojson.gz`,
+      {
+        responseType: 'arraybuffer'
+      }
+    );
+    const responseString = pako.inflate(responseSchool.data, {
+      to: 'string'
+    });
+    return JSON.parse(responseString);
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};
+
+

@@ -72,8 +72,7 @@ const DataLayerWrap = ({ sourcesDataFlag, sourcesData, countryData }) => (
         tiles={[
           `${TITLER_URL}/{z}/{x}/{y}@1x?url=${S3_PATH}/${countryData.iso_code}_index_services_cog.tif&rescale=0,1&colormap_name=rdbu_r`
         ]}
-        tileSize={256}
-      >
+        tileSize={256}>
         <Layer
           id="index-tif"
           type="raster"
@@ -91,8 +90,7 @@ const DataLayerWrap = ({ sourcesDataFlag, sourcesData, countryData }) => (
         tiles={[
           `${TITLER_URL}/{z}/{x}/{y}@1x?url=${S3_PATH}/${countryData.iso_code}_cog.tif&rescale=${countryData.rescale}&colormap_name=inferno`
         ]}
-        tileSize={256}
-      >
+        tileSize={256}>
         <Layer
           id="pop-tif"
           type="raster"
@@ -100,6 +98,21 @@ const DataLayerWrap = ({ sourcesDataFlag, sourcesData, countryData }) => (
             visibility: sourcesDataFlag.population_density_layer ? 'visible' : 'none'
           }}
           paint={alphaRaster}
+        />
+      </Source>
+    )}
+    {sourcesDataFlag && sourcesData && sourcesData.adminBoundary && (
+      <Source id={`boundary-adm0`} type="geojson" data={sourcesData.adminBoundary}>
+        <Layer
+          id={`boundary-adm0-points`}
+          type="line"
+          paint={{
+            'line-color': 'red',
+            'line-width': 1,
+            'line-opacity': 0.7
+          }}
+          maxzoom={18}
+          minzoom={MIN_ZOOM_HEADMAP}
         />
       </Source>
     )}

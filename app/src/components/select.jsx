@@ -10,17 +10,17 @@ const CustomSelect = ({ options, onChange, selectedValue }) => {
 
   return (
     <div className="relative w-full mb-2">
-      <p>Countries</p>
+      <p >Countries</p>
       <button
         className="flex items-center justify-start w-full p-2 bg-white border rounded dark:bg-gray-800"
         onClick={() => setIsOpen(!isOpen)}
       >
         {options.find((option) => option.iso_code === selectedValue.iso_code).ico}
-        <span className="text-white">
+        <span className="ml-1">
           {options.find((option) => option.iso_code === selectedValue.iso_code).name}
         </span>
         <svg
-          className="w-4 h-4 ml-auto text-white fill-current"
+          className="w-4 h-4 ml-auto fill-current "
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
         >
@@ -36,7 +36,7 @@ const CustomSelect = ({ options, onChange, selectedValue }) => {
               onClick={() => handleSelect(option)}
             >
               {option.ico}
-              <span className="ml-2 text-white">{option.name}</span>
+              <span className="ml-2 ">{option.name}</span>
             </li>
           ))}
         </ul>

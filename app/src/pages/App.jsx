@@ -3,7 +3,7 @@ import StaticMap, { NavigationControl, ScaleControl } from 'react-map-gl';
 import { COUNTRIES, AMENITIES } from '../components/constants';
 import DeckGL from 'deck.gl';
 import { MapContext } from 'react-map-gl/dist/esm/components/map.js';
-import { fetchLocalCsv } from '../utils/utils';
+import { fetchLocalCsv , fetchLocalGeojson} from '../utils/utils';
 import Sidebar from '../components/Sidebar';
 import CustomPopUp from '../components/popUp';
 import DataLayerWrap from '../components/dataLayer';
@@ -14,7 +14,7 @@ const LAYERS_ACTION = ['education-points', 'healthcare-points', 'transport-point
 const initialViewState = {
   latitude: 14.0583,
   longitude: 108.2772,
-  zoom: 10
+  zoom: 7
 };
 
 function App() {
@@ -36,11 +36,13 @@ function App() {
         const educationData = await fetchLocalCsv(name_code, 'education');
         const healthcareData = await fetchLocalCsv(name_code, 'healthcare');
         const transportData = await fetchLocalCsv(name_code, 'transport');
+        const adminBoundary = await fetchLocalGeojson(name_code, 'ADM0');
 
         setSourcesData({
           educationData,
           healthcareData,
-          transportData
+          transportData,
+          adminBoundary
         });
         setSourcesDataFlag({
           education_osm_data_layer: false,
@@ -143,12 +145,9 @@ function App() {
         >
           <StaticMap
             ref={mapRef}
-            scrollZoom={true}
             onLoad={handleLoad}
-            boxZoom={true}
             minZoom={6}
             maxZoom={15}
-            doubleClickZoom={true}
             mapStyle="mapbox://styles/junica123/clx4w5d0p08dn01nx9vmbhyio"
             mapboxAccessToken={API_TOKEN}
           >
@@ -158,7 +157,7 @@ function App() {
               countryData={selectedCountry}
             />
             <ScaleControl position="top-left" />
-            <NavigationControl position="top-left" />
+            <NavigationControl position="top-left" style={{zIndex:10000}} />
             <CustomPopUp hoverInfo={hoverInfo} />
           </StaticMap>
         </DeckGL>
