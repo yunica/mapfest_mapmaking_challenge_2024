@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { FiEyeOff, FiEye } from 'react-icons/fi';
-import { MdDarkMode , MdLightMode} from "react-icons/md";
+import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import CustomSelect from './select';
 import { COUNTRIES } from './constants';
 import CheckBox from './checkBox';
@@ -29,7 +29,6 @@ const Sidebar = ({
     }
   }, [isDarkMode]);
 
-
   if (!isSidebarVisible) {
     return (
       <button
@@ -48,23 +47,22 @@ const Sidebar = ({
       <div className="flex flex-col">
         <div className="flex justify-between mb-4">
           <h3 className="text-center text-md ">Inaccessibility to public services</h3>
-          <div className='flex flex-col items-center px-2 gap-y-2 text-md'>
-          <button
-            className="rounded "
-            onClick={() => setIsSidebarVisible(false)}
-            data-tooltip-target="tooltip-hidde"
-            type="button">
-            <FiEyeOff />
-          </button>
-          <button
-            className="rounded "
-            onClick={handleDarkMode}
-            data-tooltip-target="tooltip-hidde"
-            type="button">
-           {isDarkMode? <MdLightMode /> : <MdDarkMode />}
-          </button>
+          <div className="flex flex-col items-center px-2 gap-y-2 text-md">
+            <button
+              className="rounded "
+              onClick={() => setIsSidebarVisible(false)}
+              data-tooltip-target="tooltip-hidde"
+              type="button">
+              <FiEyeOff />
+            </button>
+            <button
+              className="rounded "
+              onClick={handleDarkMode}
+              data-tooltip-target="tooltip-hidde"
+              type="button">
+              {isDarkMode ? <MdLightMode /> : <MdDarkMode />}
+            </button>
           </div>
-
         </div>
         <CustomSelect
           options={COUNTRIES}
@@ -94,7 +92,7 @@ const Sidebar = ({
             <h3 className="mb-1">Description</h3>
             <p className="text-sm ">
               Utilizing{' '}
-               <a
+              <a
                 href="https://www.openstreetmap.org/"
                 target="_blank"
                 rel="noreferrer"
@@ -107,11 +105,18 @@ const Sidebar = ({
                 target="_blank"
                 rel="noreferrer"
                 className="text-blue-400 underline hover:no-underline">
-                population datasets 
+                population datasets
               </a>{' '}
               , this application conducts a comprehensive analysis of population distribution and
               public service coverage. It identifies high-density areas lacking essential services,
-              offering invaluable insights for urban planning and policy development.
+              offering invaluable insights for urban planning and policy development,{' '}
+              <a
+                href="https://github.com/yunica/mapfest_mapmaking_challenge_2024"
+                target="_blank"
+                rel="noreferrer"
+                className="text-blue-400 underline hover:no-underline">
+                more information.
+              </a>
             </p>
             <p className="mt-2 text-sm ">
               The <b>{'Services Inaccessibility Index Layer'}</b> indicates areas with high
