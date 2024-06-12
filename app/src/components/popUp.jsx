@@ -11,8 +11,8 @@ const popUp = ({ hoverInfo }) => {
 
   return (
     <Popup
-      longitude={lngLat[0]}
-      latitude={lngLat[1]}
+      longitude={lngLat.lng}
+      latitude={lngLat.lat}
       offset={[0, -10]}
       closeButton={false}
       className="county-info"

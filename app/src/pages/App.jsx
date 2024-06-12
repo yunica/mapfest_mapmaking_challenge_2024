@@ -1,9 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import StaticMap, { NavigationControl, ScaleControl } from 'react-map-gl';
 import { COUNTRIES, AMENITIES } from '../components/constants';
-import DeckGL from 'deck.gl';
-import { MapContext } from 'react-map-gl/dist/esm/components/map.js';
-import { fetchLocalCsv , fetchLocalGeojson} from '../utils/utils';
+import { fetchLocalCsv, fetchLocalGeojson } from '../utils/utils';
 import Sidebar from '../components/Sidebar';
 import CustomPopUp from '../components/popUp';
 import DataLayerWrap from '../components/dataLayer';
@@ -19,8 +17,6 @@ const initialViewState = {
 
 function App() {
   const mapRef = useRef(null);
-  const deckRef = useRef(null);
-  const [deckLayers, setDeckLayers] = useState([]);
   const [viewState, setViewState] = useState({ ...initialViewState });
   const [sourcesData, setSourcesData] = useState(null);
   const [sourcesDataFlag, setSourcesDataFlag] = useState(null);
@@ -64,6 +60,7 @@ function App() {
   const handleChange = (selectCountry) => {
     setViewState({ ...initialViewState, ...selectCountry.center });
     setSelectedCountry(selectCountry);
+    mapRef.current?.flyTo({center: [selectCountry.center.longitude, selectCountry.center.latitude], zoom:8 ,duration: 2000});
   };
 
   const handlesetSourcesDataFlag = (layer_id) => (event) => {
@@ -74,11 +71,12 @@ function App() {
   };
   const handleMapClick = (event) => {
     try {
-      const features = mapRef.current.queryRenderedFeatures([event.x, event.y]);
+      const {x,y} = event.point;
+      const features = mapRef.current.queryRenderedFeatures([x, y]);
       const new_features = features.filter((i) => i.layer && LAYERS_ACTION.includes(i.layer.id));
 
       if (new_features.length) {
-        const i = { ...new_features[0], lngLat: event.coordinate };
+        const i = { ...new_features[0], lngLat: event.lngLat };
         setOsmInfo({ ...i });
       } else {
         setOsmInfo(null);
@@ -90,11 +88,12 @@ function App() {
   };
   const handleMapHover = (event) => {
     try {
-      const features = mapRef.current.queryRenderedFeatures([event.x, event.y]);
+      const {x,y} = event.point;
+      const features = mapRef.current.queryRenderedFeatures([x, y]);
       const new_features = features.filter((i) => i.layer && LAYERS_ACTION.includes(i.layer.id));
 
       if (new_features.length) {
-        const i = { ...new_features[0], lngLat: event.coordinate };
+        const i = { ...new_features[0], lngLat: event.lngLat };
         setHoverInfo({ ...i });
       } else {
         setHoverInfo(null);
@@ -134,34 +133,25 @@ function App() {
   return (
     <div className="relative w-full h-screen bg-white dark:bg-slate-800">
       <div className="w-screen h-screen">
-        <DeckGL
-          ref={deckRef}
-          layers={deckLayers}
+        <StaticMap
+          ref={mapRef}
           initialViewState={viewState}
-          controller={true}
-          ContextProvider={MapContext.Provider}
+          onLoad={handleLoad}
+          minZoom={6}
+          maxZoom={15}
+          mapStyle="mapbox://styles/junica123/clx4w5d0p08dn01nx9vmbhyio"
+          mapboxAccessToken={API_TOKEN}
           onClick={handleMapClick}
-          onHover={handleMapHover}
-        >
-          <StaticMap
-            ref={mapRef}
-            onLoad={handleLoad}
-            minZoom={6}
-            maxZoom={15}
-            mapStyle="mapbox://styles/junica123/clx4w5d0p08dn01nx9vmbhyio"
-            mapboxAccessToken={API_TOKEN}
-          >
-            <DataLayerWrap
-              sourcesDataFlag={sourcesDataFlag}
-              sourcesData={sourcesData}
-              countryData={selectedCountry}
-            />
-            <ScaleControl position="top-left" />
-            <NavigationControl position="top-left" style={{zIndex:10000}} />
-            <CustomPopUp hoverInfo={hoverInfo} />
-          </StaticMap>
-        </DeckGL>
-
+          onMouseMove={handleMapHover}>
+          <DataLayerWrap
+            sourcesDataFlag={sourcesDataFlag}
+            sourcesData={sourcesData}
+            countryData={selectedCountry}
+          />
+          <ScaleControl position="top-left" />
+          <NavigationControl position="top-left"  />
+          <CustomPopUp hoverInfo={hoverInfo} />
+        </StaticMap>
         <Sidebar
           handleChangeSelect={handleChange}
           selectedCountry={selectedCountry}
