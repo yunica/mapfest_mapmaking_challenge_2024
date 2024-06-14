@@ -72,7 +72,8 @@ const DataLayerWrap = ({ sourcesDataFlag, sourcesData, countryData }) => (
         tiles={[
           `${TITLER_URL}/{z}/{x}/{y}@1x?url=${S3_PATH}/${countryData.iso_code}_index_services_cog.tif&rescale=0,1&colormap_name=rdbu_r`
         ]}
-        tileSize={256}>
+        tileSize={256}
+      >
         <Layer
           id="index-tif"
           type="raster"
@@ -90,7 +91,8 @@ const DataLayerWrap = ({ sourcesDataFlag, sourcesData, countryData }) => (
         tiles={[
           `${TITLER_URL}/{z}/{x}/{y}@1x?url=${S3_PATH}/${countryData.iso_code}_cog.tif&rescale=${countryData.rescale}&colormap_name=inferno`
         ]}
-        tileSize={256}>
+        tileSize={256}
+      >
         <Layer
           id="pop-tif"
           type="raster"

@@ -10,7 +10,7 @@ const CustomSelect = ({ options, onChange, selectedValue }) => {
 
   return (
     <div className="relative w-full mb-2">
-      <p >Countries</p>
+      <p>Countries</p>
       <button
         className="flex items-center justify-start w-full p-2 bg-white border rounded dark:bg-gray-800"
         onClick={() => setIsOpen(!isOpen)}

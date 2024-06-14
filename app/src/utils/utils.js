@@ -73,5 +73,3 @@ export const fetchLocalGeojson = async (name_code, source) => {
     return null;
   }
 };
-
-

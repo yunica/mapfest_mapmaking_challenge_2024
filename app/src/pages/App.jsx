@@ -60,7 +60,11 @@ function App() {
   const handleChange = (selectCountry) => {
     setViewState({ ...initialViewState, ...selectCountry.center });
     setSelectedCountry(selectCountry);
-    mapRef.current?.flyTo({center: [selectCountry.center.longitude, selectCountry.center.latitude], zoom:8 ,duration: 2000});
+    mapRef.current?.flyTo({
+      center: [selectCountry.center.longitude, selectCountry.center.latitude],
+      zoom: 8,
+      duration: 2000
+    });
   };
 
   const handlesetSourcesDataFlag = (layer_id) => (event) => {
@@ -71,7 +75,7 @@ function App() {
   };
   const handleMapClick = (event) => {
     try {
-      const {x,y} = event.point;
+      const { x, y } = event.point;
       const features = mapRef.current.queryRenderedFeatures([x, y]);
       const new_features = features.filter((i) => i.layer && LAYERS_ACTION.includes(i.layer.id));
 
@@ -88,7 +92,7 @@ function App() {
   };
   const handleMapHover = (event) => {
     try {
-      const {x,y} = event.point;
+      const { x, y } = event.point;
       const features = mapRef.current.queryRenderedFeatures([x, y]);
       const new_features = features.filter((i) => i.layer && LAYERS_ACTION.includes(i.layer.id));
 
@@ -142,14 +146,15 @@ function App() {
           mapStyle="mapbox://styles/junica123/clx4w5d0p08dn01nx9vmbhyio"
           mapboxAccessToken={API_TOKEN}
           onClick={handleMapClick}
-          onMouseMove={handleMapHover}>
+          onMouseMove={handleMapHover}
+        >
           <DataLayerWrap
             sourcesDataFlag={sourcesDataFlag}
             sourcesData={sourcesData}
             countryData={selectedCountry}
           />
           <ScaleControl position="top-left" />
-          <NavigationControl position="top-left"  />
+          <NavigationControl position="top-left" />
           <CustomPopUp hoverInfo={hoverInfo} />
         </StaticMap>
         <Sidebar

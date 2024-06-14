@@ -33,7 +33,8 @@ const Sidebar = ({
     return (
       <button
         className="absolute p-2 text-sm bg-gray-200 rounded text-slate-500 dark:text-slate-200 top-4 right-2 dark:bg-gray-700"
-        onClick={() => setIsSidebarVisible(true)}>
+        onClick={() => setIsSidebarVisible(true)}
+      >
         <div className="flex items-center justify-start ">
           <FiEye />
           <label className="ml-2">Show panel</label>
@@ -52,14 +53,16 @@ const Sidebar = ({
               className="rounded "
               onClick={() => setIsSidebarVisible(false)}
               data-tooltip-target="tooltip-hidde"
-              type="button">
+              type="button"
+            >
               <FiEyeOff />
             </button>
             <button
               className="rounded "
               onClick={handleDarkMode}
               data-tooltip-target="tooltip-hidde"
-              type="button">
+              type="button"
+            >
               {isDarkMode ? <MdLightMode /> : <MdDarkMode />}
             </button>
           </div>
@@ -87,7 +90,8 @@ const Sidebar = ({
           style={{
             maxHeight:
               'calc(100vh - 32px - 15px - 16px -  72px - 16px - 66px - 16px - 236px - 16px )'
-          }}>
+          }}
+        >
           <div className="flex-grow overflow-auto min-h-[10vh]">
             <h3 className="mb-1">Description</h3>
             <p className="text-sm ">
@@ -96,7 +100,8 @@ const Sidebar = ({
                 href="https://www.openstreetmap.org/"
                 target="_blank"
                 rel="noreferrer"
-                className="text-blue-400 underline hover:no-underline">
+                className="text-blue-400 underline hover:no-underline"
+              >
                 OpenStreetMap
               </a>{' '}
               and{' '}
@@ -104,7 +109,8 @@ const Sidebar = ({
                 href="https://www.worldpop.org/"
                 target="_blank"
                 rel="noreferrer"
-                className="text-blue-400 underline hover:no-underline">
+                className="text-blue-400 underline hover:no-underline"
+              >
                 population datasets
               </a>{' '}
               , this application conducts a comprehensive analysis of population distribution and
@@ -114,7 +120,8 @@ const Sidebar = ({
                 href="https://github.com/yunica/mapfest_mapmaking_challenge_2024"
                 target="_blank"
                 rel="noreferrer"
-                className="text-blue-400 underline hover:no-underline">
+                className="text-blue-400 underline hover:no-underline"
+              >
                 more information.
               </a>
             </p>
@@ -126,7 +133,8 @@ const Sidebar = ({
                 href="https://www.openstreetmap.org/"
                 target="_blank"
                 rel="noreferrer"
-                className="text-blue-400 underline hover:no-underline">
+                className="text-blue-400 underline hover:no-underline"
+              >
                 OpenStreetMap
               </a>{' '}
               data. Higher index values represent areas where residents face challenges in accessing
