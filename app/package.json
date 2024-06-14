@@ -14,10 +14,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "PUBLIC_URL=/mapfest_mapmaking_challenge_2024  react-scripts start",
-    "predeploy": "PUBLIC_URL=/mapfest_mapmaking_challenge_2024  ",
-    "prebuild": "rm -rf ./build",
-    "build": "react-scripts build",
+    "start": "PUBLIC_URL=/mapfest_mapmaking_challenge_2024 react-scripts start",
+    "predeploy": "rm -rf ./build && PUBLIC_URL=/mapfest_mapmaking_challenge_2024  react-scripts build",
     "deploy": "gh-pages -d build",
     "stage": "PUBLIC_URL=/  yarn build && surge ./build mapfest_mapmaking_challenge_2024.surge.sh ",
     "lint": "eslint ./src/",
