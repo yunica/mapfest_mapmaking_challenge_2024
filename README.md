@@ -23,7 +23,9 @@ Data from OpenStreetMap was used to generate layers of services such as educatio
 ### WorldPop
 
 Population data was used for the density layer and the inaccessibility index.
-Key Findings
+
+## Key Findings
+
 - Areas with high population density often have limited access to essential services.
 - For this application, six countries and three services were selected. However, the application can be expanded to other regions and include additional services.
 - It is important to note that an inaccessibility index considers many variables. For this application, we relied on data from OpenStreetMap. We must consider that the data may not be up to date and more tags should be considered.
