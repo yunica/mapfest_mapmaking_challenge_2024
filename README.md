@@ -1,5 +1,7 @@
 # Urban Public Services Inaccessibility
 
+![image](image.png)
+
 ## Purpose
 The goal is to identify high population density areas with limited access to essential services like transportation, healthcare, and education. This resource is designed to assist governments and stakeholders in urban planning and policy development.
 
