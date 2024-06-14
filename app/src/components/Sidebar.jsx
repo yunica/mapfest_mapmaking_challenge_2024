@@ -47,7 +47,7 @@ const Sidebar = ({
     <div className="absolute p-2 bg-white rounded-lg text-slate-500 dark:text-slate-200 lg:w-1/5 top-4 right-2 bottom-8 dark:bg-gray-700 md:w-1/4 sm:w-1/2 xs:w-1/2 ">
       <div className="flex flex-col">
         <div className="flex justify-between mb-4">
-          <h3 className="text-center text-md ">Inaccessibility to public services</h3>
+          <h3 className="text-center text-md ">Urban Public Services Inaccessibility</h3>
           <div className="flex flex-col items-center px-2 gap-y-2 text-md">
             <button
               className="rounded "
