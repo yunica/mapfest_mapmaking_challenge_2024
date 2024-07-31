@@ -23,7 +23,7 @@ const checkBox = ({ value, text, handleChange }) => {
       ico = <MdOutlineDirectionsTransit size={20} color="#3778ff" />;
       break;
     case 'population':
-      textLabel = 'population - wordpop ';
+      textLabel = 'population - worldpop ';
 
       ico = <FaPeopleRoof size={20} color="#ffcb23" />;
       legend = (
